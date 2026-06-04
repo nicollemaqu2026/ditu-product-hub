@@ -1,0 +1,850 @@
+[
+  {
+    "id": "BL-001",
+    "epic": "PDP Sharing",
+    "feature": "Cluster Tabs",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "listo-para-dev",
+      "android": "listo-para-dev",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "aprobado",
+    "prdReady": true,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.836Z",
+    "updatedAt": "2026-05-28T18:39:32.260Z",
+    "linkPRD": "https://example.com/prd",
+    "linkFigma": ""
+  },
+  {
+    "id": "BL-002",
+    "epic": "Home",
+    "feature": "Hero Dinámico",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "listo-para-dev",
+      "android": "listo-para-dev",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": true,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T05:17:20.240Z"
+  },
+  {
+    "id": "BL-003",
+    "epic": "Home",
+    "feature": "Stories",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "listo-para-dev",
+      "android": "listo-para-dev",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-06-02T18:12:58.419Z"
+  },
+  {
+    "id": "BL-004",
+    "epic": "Home",
+    "feature": "Top 10",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "listo-para-dev",
+      "android": "listo-para-dev",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "aprobado",
+    "prdReady": true,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T05:27:49.721Z"
+  },
+  {
+    "id": "BL-005",
+    "epic": "Home",
+    "feature": "Hubs",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "listo-para-dev",
+      "android": "listo-para-dev",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-06-02T18:12:50.887Z",
+    "linkPRD": "",
+    "linkFigma": ""
+  },
+  {
+    "id": "BL-006",
+    "epic": "Home",
+    "feature": "Collection",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-007",
+    "epic": "Home",
+    "feature": "Banners Publicitarios",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-008",
+    "epic": "Home",
+    "feature": "Carrusel Categorías",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-009",
+    "epic": "Home",
+    "feature": "Menú Navegación",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-010",
+    "epic": "Home",
+    "feature": "Continuar Viendo",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-011",
+    "epic": "Home",
+    "feature": "Mi Lista",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-012",
+    "epic": "PDP Sharing",
+    "feature": "PDP Sharing",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-013",
+    "epic": "Player Live y VOD",
+    "feature": "Timeline Preview",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-014",
+    "epic": "Player Live y VOD",
+    "feature": "Live Timeline",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": true,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-06-02T18:11:07.411Z"
+  },
+  {
+    "id": "BL-015",
+    "epic": "EPG",
+    "feature": "Electronic Program Guide",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-016",
+    "epic": "Ads Consent Management",
+    "feature": "Modal de Cookies y Privacidad",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-017",
+    "epic": "Login y Perfiles",
+    "feature": "Entry Points",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-018",
+    "epic": "Login y Perfiles",
+    "feature": "Registro",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-019",
+    "epic": "Login y Perfiles",
+    "feature": "Login",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-020",
+    "epic": "Login y Perfiles",
+    "feature": "Social Login",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-021",
+    "epic": "Login y Perfiles",
+    "feature": "Creación de Perfil",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-022",
+    "epic": "Login y Perfiles",
+    "feature": "Edición de Perfil",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-023",
+    "epic": "Login y Perfiles",
+    "feature": "Eliminar Perfil",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-024",
+    "epic": "Login y Perfiles",
+    "feature": "Cambio de Contraseña",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-025",
+    "epic": "Login y Perfiles",
+    "feature": "Eliminar Cuenta",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-026",
+    "epic": "Integraciones",
+    "feature": "Deep Links - Appsflyer",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-027",
+    "epic": "Integraciones",
+    "feature": "Estadísticas de Partidos",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-028",
+    "epic": "Integraciones",
+    "feature": "NPAW",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-029",
+    "epic": "Integraciones",
+    "feature": "Push Notifications - CleverTap",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-030",
+    "epic": "Integraciones",
+    "feature": "Recomendados (Because You Watched / More Like This)",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-031",
+    "epic": "Integraciones",
+    "feature": "Stories - Storyli",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-032",
+    "epic": "Integraciones",
+    "feature": "Comscore",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-033",
+    "epic": "Splash",
+    "feature": "Splash Screen",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-034",
+    "epic": "Casting",
+    "feature": "Casting",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-035",
+    "epic": "Microdramas",
+    "feature": "Microdramas",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-036",
+    "epic": "Pagos",
+    "feature": "SVOD",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-037",
+    "epic": "Pagos",
+    "feature": "Micropagos",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-038",
+    "epic": "Pagos",
+    "feature": "Wallet",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-039",
+    "epic": "Seguridad",
+    "feature": "Seguridad de Cuentas (Modelo Netflix)",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-040",
+    "epic": "Búsqueda",
+    "feature": "Búsqueda de Contenido Inteligente",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "createdAt": "2026-05-28T04:54:07.838Z",
+    "updatedAt": "2026-05-28T04:54:07.838Z"
+  },
+  {
+    "id": "BL-041",
+    "epic": "PDP Sharing",
+    "feature": "Feature Test 1779993454384",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "linkPRD": "",
+    "linkFigma": "",
+    "createdAt": "2026-05-28T18:37:37.316Z",
+    "updatedAt": "2026-05-28T18:37:37.316Z"
+  },
+  {
+    "id": "BL-042",
+    "epic": "Home",
+    "feature": "Feature Test 1779993564907",
+    "platforms": {
+      "web": "sin-especificar",
+      "ios": "sin-especificar",
+      "android": "sin-especificar",
+      "atv": "sin-especificar"
+    },
+    "priority": "media",
+    "sprint": "",
+    "figmaStatus": "pendiente",
+    "prdReady": false,
+    "blocker": "",
+    "blockerReason": "",
+    "notes": "",
+    "linkPRD": "https://example.com/prd",
+    "linkFigma": "",
+    "createdAt": "2026-05-28T18:39:28.682Z",
+    "updatedAt": "2026-05-28T18:39:36.498Z"
+  }
+]

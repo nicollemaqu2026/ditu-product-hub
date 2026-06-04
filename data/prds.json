@@ -1,0 +1,189 @@
+[
+  {
+    "id": "PRD-001",
+    "backlogId": "BL-006",
+    "feature": "Collection",
+    "epic": "Home",
+    "version": "1.0",
+    "status": "borrador",
+    "author": "Nicolle",
+    "objective": "",
+    "userStories": [
+      {
+        "id": "US-1",
+        "as": "",
+        "want": "",
+        "soThat": ""
+      }
+    ],
+    "requirements": [
+      {
+        "id": "REQ-1",
+        "description": "",
+        "priority": "must-have"
+      }
+    ],
+    "outOfScope": "",
+    "acceptanceCriteria": {
+      "web": "",
+      "ios": "",
+      "android": "",
+      "atv": ""
+    },
+    "technicalNotes": "",
+    "designNotes": "",
+    "openQuestions": [
+      {
+        "id": "Q-1",
+        "question": "",
+        "answer": "",
+        "resolved": false
+      }
+    ],
+    "createdAt": "2026-05-28T05:15:22.578Z",
+    "updatedAt": "2026-05-28T05:15:22.578Z"
+  },
+  {
+    "id": "PRD-002",
+    "backlogId": "BL-014",
+    "feature": "Live Timeline",
+    "epic": "Player Live y VOD",
+    "version": "1.0",
+    "status": "borrador",
+    "author": "Producto — DITU 2.0",
+    "objective": "Permitir al usuario retroceder, pausar y retomar el contenido en vivo desde el player, manteniendo siempre visible su posición relativa respecto al punto en vivo actual mediante un scrubber interactivo. El Live Timeline es el scrubber interactivo del player que da al usuario un rango de retroceso sobre el stream activo sin salir del player ni interrumpir la transmisión.",
+    "userStories": [
+      {
+        "id": "CU-01",
+        "as": "usuario autenticado viendo stream en vivo",
+        "want": "arrastrar el thumb del scrubber hacia la izquierda para retroceder el contenido",
+        "soThat": "puedo rever momentos anteriores de la transmisión sin perder el stream"
+      },
+      {
+        "id": "CU-02",
+        "as": "usuario en modo diferido",
+        "want": "tocar 'Retomar En Vivo' o arrastrar el thumb al extremo derecho",
+        "soThat": "puedo volver al punto en vivo actual con un solo gesto"
+      },
+      {
+        "id": "CU-03",
+        "as": "usuario viendo contenido en vivo",
+        "want": "pausar el stream y retomarlo desde donde pausé",
+        "soThat": "no pierdo contenido durante una interrupción"
+      },
+      {
+        "id": "CU-04",
+        "as": "usuario en orientación vertical",
+        "want": "ver el timeline integrado con la guía EPG debajo del player",
+        "soThat": "puedo saber qué programa estoy viendo y controlar el timeline al mismo tiempo"
+      },
+      {
+        "id": "CU-05",
+        "as": "usuario en vivo con buffer = 0",
+        "want": "recibir feedback visual claro cuando no hay buffer disponible",
+        "soThat": "entiendo por qué no puedo retroceder el contenido"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "REQ-01",
+        "description": "El scrubber (Live Timeline) aparece únicamente cuando el contenido activo es un stream en vivo. No aplica a VOD.",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-02",
+        "description": "El thumb no puede avanzar más allá del live edge marker (borde derecho bloqueado físicamente).",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-03",
+        "description": "Al arrastrar el thumb hasta el extremo derecho del track, el sistema hace snap automático al punto en vivo actual.",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-04",
+        "description": "El badge 'En vivo' es visible cuando playback_position === buffer_end, y se oculta cuando el usuario está en modo diferido.",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-05",
+        "description": "El botón 'Retomar En Vivo' aparece cuando playback_position < buffer_end y se oculta cuando el usuario está en el live edge.",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-06",
+        "description": "El thumb se expande visualmente durante el gesto de drag para indicar estado activo.",
+        "priority": "should-have"
+      },
+      {
+        "id": "REQ-07",
+        "description": "Al pausar en vivo, el backend continúa almacenando el buffer. Al reanudar, el player retoma desde la posición de pausa, no desde el live edge.",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-08",
+        "description": "En orientación vertical, el componente EPGTimeline se muestra debajo del player solo si hay datos EPG disponibles. El player funciona sin EPG.",
+        "priority": "should-have"
+      },
+      {
+        "id": "REQ-09",
+        "description": "Cuando buffer = 0, el drag del thumb está deshabilitado. El track muestra estado visual de no disponible.",
+        "priority": "must-have"
+      },
+      {
+        "id": "REQ-10",
+        "description": "Los controles del Player Tool Bar se ocultan automáticamente tras N segundos de inactividad (valor a confirmar con UX — DV-03).",
+        "priority": "should-have"
+      }
+    ],
+    "outOfScope": "DVR / descarga del contenido en vivo. Captura de pantalla o clips del stream. Retroceso en contenido on-demand (VOD). Timeline en pantalla de inicio o miniplayer. Función de avance rápido (fast forward) en contenido en vivo. El componente no expone duración total del stream ni conteo hacia adelante.",
+    "acceptanceCriteria": {
+      "web": "No aplica en esta versión.",
+      "ios": "CA-01: Scrubber visible solo en live, oculto en VOD. CA-02: Badge 'En vivo' aparece/desaparece según posición. CA-03: Botón 'Retomar En Vivo' visible solo en modo diferido. CA-04: Thumb bloqueado en live edge. CA-05: Snap al live edge al arrastrar al extremo derecho. CA-06: 'Retomar En Vivo' lleva al punto en vivo actual. CA-07: Thumb se expande visualmente durante drag. CA-08: Pausa desde live edge deja al usuario en modo diferido al reanudar. CA-09: EPGTimeline visible en vertical solo con datos EPG. CA-10: Drag deshabilitado cuando buffer = 0.",
+      "android": "CA-01 a CA-10 idénticos a iOS. Adicionalmente: snap al live edge funciona con touch Y con navegación por D-pad.",
+      "atv": "No aplica en esta versión — Live Timeline es mobile-first (iOS/Android)."
+    },
+    "technicalNotes": "DEPENDENCIAS: (1) DVR/Buffer API — provee buffer_start, buffer_end y playback_position en tiempo real. Debe existir antes de que este componente pueda desarrollarse. (2) Stream Player SDK — SDK de reproducción con soporte de seek dentro del buffer live. (3) EPG API — para EPGTimeline en vertical, opcional. (4) Player Tool Bar (componente base) — contenedor padre, debe construirse primero. MODELO DE DATOS: { is_live: boolean, buffer_start: timestamp, buffer_end: timestamp, playback_position: timestamp, buffer_duration_seconds: integer, is_paused: boolean, epg_available: boolean }. REGLAS: playback_position siempre en rango [buffer_start, buffer_end]. buffer_end se actualiza en tiempo real. Cuando playback_position === buffer_end, is_live = true. El sistema NO persiste la posición del buffer entre sesiones — al reabrir el player inicia en el live edge.",
+    "designNotes": "Figma (fuente de verdad visual): https://www.figma.com/design/psxGSGtrt7wPGIXnvBizKH/-HND--Player-%7C-Mobile-%7C-READY-v2.2.0?node-id=5-30 | Nodo: 5:30 — '2. Live Timeline - 27/04/26 - REVIEW' | Componentes clave en Figma: Player Tool Bar > Progress Bar > Thumb (ellipse), Badge 'En vivo', EPGTimeline, EPGPlayer. ANOTACIONES DE PM: (1) Figma no especifica el estado visual del track cuando buffer = 0 — pendiente diseño (DV-02). (2) No hay diseño para estado de reconexión tras pérdida de conexión (DV-04). (3) No está definido el timeout de ocultamiento de controles ni el gesto para mostrarlos (DV-03). (4) No hay especificación de touch target mínimo del thumb para accesibilidad. (5) El estado del badge 'En vivo' al pausar no está diseñado — ¿desaparece inmediatamente o hay estado transitorio? (DV-06).",
+    "openQuestions": [
+      {
+        "id": "DV-01",
+        "question": "¿Cuál es el tiempo máximo de retroceso soportado por la infraestructura? El diseño sugiere hasta 4 horas pero no está confirmado por Engineering.",
+        "answer": "",
+        "resolved": false
+      },
+      {
+        "id": "DV-02",
+        "question": "No existe diseño para el estado del track cuando buffer = 0. ¿El thumb aparece deshabilitado, el track se ve vacío, aparece un mensaje? Owner: UX Design.",
+        "answer": "",
+        "resolved": false
+      },
+      {
+        "id": "DV-03",
+        "question": "No está definido el timeout de ocultamiento de controles del Player Tool Bar ni el gesto para volver a mostrarlos. Owner: UX Design.",
+        "answer": "",
+        "resolved": false
+      },
+      {
+        "id": "DV-04",
+        "question": "¿Qué pasa tras reconexión cuando el usuario estaba en modo diferido? ¿Retoma desde la última posición conocida o salta al live edge? Owner: PM.",
+        "answer": "",
+        "resolved": false
+      },
+      {
+        "id": "DV-05",
+        "question": "Las etiquetas de tiempo del scrubber, ¿muestran tiempo relativo (ej: -1:23:00) o tiempo absoluto (ej: 14:32)? Owner: UX Design.",
+        "answer": "",
+        "resolved": false
+      },
+      {
+        "id": "DV-06",
+        "question": "¿El badge 'En vivo' desaparece inmediatamente al pausar o tiene un estado transitorio antes de confirmar el gap? Owner: UX Design.",
+        "answer": "",
+        "resolved": false
+      }
+    ],
+    "createdAt": "2026-06-02T00:00:00.000Z",
+    "updatedAt": "2026-06-02T00:00:00.000Z"
+  }
+]

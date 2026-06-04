@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DITU Product Hub</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ── Sidebar ────────────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-line1">
+          <span class="logo-ditu">DITU</span>
+          <span class="logo-dot"></span>
+          <span class="logo-hub">Product Hub</span>
+        </div>
+        <div class="logo-line2">v2.0 — Caracol Televisión</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Módulos</div>
+
+        <div class="nav-item active" data-page="backlog">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Backlog Master</span>
+        </div>
+
+        <div class="nav-item" data-page="prd">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">PRD Generator</span>
+        </div>
+
+        <div class="nav-item" data-page="patita">
+          <span class="nav-icon"><img src="/img/patita.jpg" alt="PatitaPM" class="nav-patita-img"></span>
+          <span class="nav-label">PatitaPM</span>
+        </div>
+
+        <div class="nav-item disabled">
+          <span class="nav-icon">🎨</span>
+          <span class="nav-label">Figma Tracker</span>
+          <span class="nav-badge">Próximo</span>
+        </div>
+
+        <div class="nav-item disabled">
+          <span class="nav-icon">🗓️</span>
+          <span class="nav-label">Roadmap</span>
+          <span class="nav-badge">Próximo</span>
+        </div>
+
+        <div class="nav-item disabled">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Status Report</span>
+          <span class="nav-badge">Próximo</span>
+        </div>
+
+        <div class="nav-item disabled">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">Decision Log</span>
+          <span class="nav-badge">Próximo</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="footer-stat">
+          <span id="sidebar-delivered" class="footer-stat-value">0</span>
+          <span> features entregadas de </span>
+          <span id="sidebar-total" class="footer-stat-value">—</span>
+        </div>
+        <div class="footer-progress">
+          <div class="footer-progress-bar" id="sidebar-progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main content ───────────────────────────────────────────── -->
+    <main class="main-content">
+
+      <!-- BACKLOG PAGE -->
+      <section id="page-backlog" class="page active">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Backlog Master</h1>
+            <p class="page-subtitle">Estado de todas las funcionalidades DITU 2.0 por plataforma</p>
+          </div>
+          <div class="page-header-actions">
+            <button class="btn btn-ghost" id="btn-export">↓ Exportar CSV</button>
+            <button class="btn btn-primary" id="btn-nuevo">＋ Nuevo</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-label">Total Features</div>
+            <div class="stat-card-value" id="stat-total">—</div>
+            <div class="stat-card-sub">en backlog</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Entregadas</div>
+            <div class="stat-card-value green" id="stat-entregadas">—</div>
+            <div class="stat-card-sub">todas las plataformas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">En Desarrollo</div>
+            <div class="stat-card-value purple" id="stat-desarrollo">—</div>
+            <div class="stat-card-sub">al menos una plataforma</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Bloqueadas</div>
+            <div class="stat-card-value red" id="stat-bloqueadas">—</div>
+            <div class="stat-card-sub">con bloqueo activo</div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar">
+          <select id="filter-epic">
+            <option value="">Todas las épicas</option>
+          </select>
+          <select id="filter-platform">
+            <option value="">Todas las plataformas</option>
+            <option value="web">Web</option>
+            <option value="ios">iOS</option>
+            <option value="android">Android</option>
+            <option value="atv">ATV</option>
+          </select>
+          <select id="filter-status">
+            <option value="">Todos los estados</option>
+            <option value="sin-especificar">Sin especificar</option>
+            <option value="en-especificacion">En especificación</option>
+            <option value="listo-para-dev">Listo para dev</option>
+            <option value="en-desarrollo">En desarrollo</option>
+            <option value="en-qa">En QA</option>
+            <option value="entregado">Entregado</option>
+          </select>
+          <select id="filter-blocker">
+            <option value="">Todos los bloqueos</option>
+            <option value="Nicolle">Bloqueado por Nicolle</option>
+            <option value="Equipo Técnico">Bloqueado por Tech</option>
+            <option value="__sin-bloqueo">Sin bloqueo</option>
+          </select>
+          <input type="text" id="filter-search" placeholder="Buscar funcionalidad..." />
+          <button class="btn-clear" id="btn-clear-filters">Limpiar filtros</button>
+          <div class="columns-control">
+            <button class="btn btn-ghost" id="btn-columns">Columnas ⚙</button>
+            <div class="columns-popover" id="columns-popover">
+              <div class="columns-popover-title">Mostrar plataformas</div>
+              <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="web" checked /><span>Web</span></label>
+              <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="ios" checked /><span>iOS</span></label>
+              <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="android" checked /><span>Android</span></label>
+              <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="atv" checked /><span>Android TV</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+          <table class="backlog-table" id="backlog-table">
+            <colgroup>
+              <col class="col-id" />
+              <col class="col-feature" />
+              <col class="col-prd-icon" />
+              <col class="col-plat col-web-col" />
+              <col class="col-plat col-ios-col" />
+              <col class="col-plat col-android-col" />
+              <col class="col-plat col-atv-col" />
+              <col class="col-prio" />
+              <col class="col-bloqueo" />
+              <col class="col-actions" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Funcionalidad</th>
+                <th class="th-prd-icon">PRD</th>
+                <th class="col-web-col">Web</th>
+                <th class="col-ios-col">iOS</th>
+                <th class="col-android-col">Android</th>
+                <th class="col-atv-col">ATV</th>
+                <th>Prioridad</th>
+                <th>Bloqueo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="backlog-tbody">
+              <tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-muted)">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PRD GENERATOR PAGE -->
+      <section id="page-prd" class="page">
+
+        <!-- ── LIST VIEW ─────────────────────────────────────────── -->
+        <div id="prd-list-view">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">PRD Generator</h1>
+              <p class="page-subtitle">Documentos de requisitos de producto para DITU 2.0</p>
+            </div>
+            <button class="btn btn-primary" id="btn-new-prd">+ Nuevo PRD</button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-label">Total PRDs</div>
+              <div class="stat-card-value" id="prd-stat-total">—</div>
+              <div class="stat-card-sub">documentos creados</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-label">Borradores</div>
+              <div class="stat-card-value" id="prd-stat-borradores">—</div>
+              <div class="stat-card-sub">en edición</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-label">En Revisión</div>
+              <div class="stat-card-value" style="color:var(--warning)" id="prd-stat-revision">—</div>
+              <div class="stat-card-sub">pendientes de aprobación</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-label">Aprobados</div>
+              <div class="stat-card-value green" id="prd-stat-aprobados">—</div>
+              <div class="stat-card-sub">listos para desarrollo</div>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <select id="prd-filter-epic">
+              <option value="">Todas las épicas</option>
+            </select>
+            <select id="prd-filter-status">
+              <option value="">Todos los estados</option>
+              <option value="borrador">Borrador</option>
+              <option value="en-revision">En Revisión</option>
+              <option value="aprobado">Aprobado</option>
+            </select>
+            <input type="text" id="prd-filter-search" placeholder="Buscar PRD..." />
+            <button class="btn-clear" id="prd-btn-clear-filters">Limpiar filtros</button>
+          </div>
+
+          <div class="prd-grid" id="prd-grid"></div>
+        </div>
+
+        <!-- ── EDITOR VIEW ────────────────────────────────────────── -->
+        <div id="prd-editor-view" style="display:none">
+
+          <div class="prd-editor-topbar">
+            <button class="btn btn-ghost prd-back-btn" id="prd-btn-back">← Volver al listado</button>
+          </div>
+
+          <div class="prd-editor-header">
+            <div class="prd-editor-meta">
+              <h1 class="prd-editor-title" id="prd-editor-feature-name">—</h1>
+              <span class="prd-editor-id" id="prd-editor-id">—</span>
+            </div>
+            <div class="prd-editor-actions">
+              <button class="prd-status-badge clickable borrador" id="prd-status-btn">Borrador ▾</button>
+              <button class="btn btn-primary" id="prd-btn-save-top">Guardar</button>
+              <div class="prd-status-dropdown" id="prd-status-dropdown">
+                <div class="prd-status-option" data-value="borrador">Borrador</div>
+                <div class="prd-status-option" data-value="en-revision">En Revisión</div>
+                <div class="prd-status-option" data-value="aprobado">Aprobado</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 1 -->
+          <div class="prd-section">
+            <div class="prd-section-title">1. Objetivo</div>
+            <textarea class="form-control prd-textarea" id="prd-objective"
+              placeholder="¿Qué problema resuelve esta funcionalidad? ¿Cuál es el valor para el usuario?"></textarea>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="prd-section">
+            <div class="prd-section-header">
+              <div class="prd-section-title">2. User Stories</div>
+              <button class="btn btn-ghost prd-add-btn" id="prd-add-us">+ Agregar</button>
+            </div>
+            <div class="prd-dynamic-list" id="prd-us-list"></div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="prd-section">
+            <div class="prd-section-header">
+              <div class="prd-section-title">3. Requisitos Funcionales</div>
+              <button class="btn btn-ghost prd-add-btn" id="prd-add-req">+ Agregar</button>
+            </div>
+            <div class="prd-dynamic-list" id="prd-req-list"></div>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="prd-section">
+            <div class="prd-section-title">4. Fuera de Alcance</div>
+            <textarea class="form-control prd-textarea" id="prd-out-of-scope"
+              placeholder="Qué no está incluido en este PRD..."></textarea>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="prd-section">
+            <div class="prd-section-title">5. Criterios de Aceptación</div>
+            <div class="prd-ac-grid">
+              <div class="prd-ac-item">
+                <label class="form-label">Web</label>
+                <textarea class="form-control prd-textarea" id="prd-ac-web" placeholder="Criterios para Web..."></textarea>
+              </div>
+              <div class="prd-ac-item">
+                <label class="form-label">iOS</label>
+                <textarea class="form-control prd-textarea" id="prd-ac-ios" placeholder="Criterios para iOS..."></textarea>
+              </div>
+              <div class="prd-ac-item">
+                <label class="form-label">Android</label>
+                <textarea class="form-control prd-textarea" id="prd-ac-android" placeholder="Criterios para Android..."></textarea>
+              </div>
+              <div class="prd-ac-item">
+                <label class="form-label">ATV</label>
+                <textarea class="form-control prd-textarea" id="prd-ac-atv" placeholder="Criterios para ATV..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="prd-section">
+            <div class="prd-section-title">6. Notas Técnicas</div>
+            <textarea class="form-control prd-textarea" id="prd-tech-notes"
+              placeholder="Consideraciones técnicas, dependencias, arquitectura..."></textarea>
+          </div>
+
+          <!-- Section 7 -->
+          <div class="prd-section">
+            <div class="prd-section-title">7. Notas de Diseño</div>
+            <textarea class="form-control prd-textarea" id="prd-design-notes"
+              placeholder="Referencias Figma, decisiones de diseño, componentes..."></textarea>
+          </div>
+
+          <!-- Section 8 -->
+          <div class="prd-section">
+            <div class="prd-section-header">
+              <div class="prd-section-title">8. Preguntas Abiertas</div>
+              <button class="btn btn-ghost prd-add-btn" id="prd-add-q">+ Agregar</button>
+            </div>
+            <div class="prd-dynamic-list" id="prd-q-list"></div>
+          </div>
+
+          <div class="prd-save-bar">
+            <span class="prd-last-saved" id="prd-last-saved">Sin cambios guardados</span>
+            <button class="btn btn-primary" id="prd-btn-save-bar">Guardar</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PATITA PM PAGE -->
+      <section id="page-patita" class="page">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">PatitaPM</h1>
+            <p class="page-subtitle">Tu asistente de producto con acceso al backlog y PRDs de DITU 2.0</p>
+          </div>
+          <button class="btn btn-ghost" id="patita-clear-btn">Limpiar chat</button>
+        </div>
+
+        <div class="patita-container">
+          <div class="patita-messages" id="patita-messages">
+            <div class="patita-msg patita-msg--bot">
+              <div class="patita-avatar"><img src="/img/patita.jpg" alt="PatitaPM" class="patita-avatar-img"></div>
+              <div class="patita-bubble">
+                <p>¡Hola! Soy <strong>PatitaPM</strong>, tu copiloto de producto para DITU 2.0.</p>
+                <p>Tengo acceso al backlog completo y todos los PRDs. Pregúntame lo que necesites:</p>
+                <ul>
+                  <li>"¿Cuál es el ID de la feature de Casting?"</li>
+                  <li>"¿Qué features están bloqueadas?"</li>
+                  <li>"¿En qué PRD está documentado el Live Timeline?"</li>
+                  <li>"Muéstrame todas las features de la épica Home"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="patita-input-row">
+            <textarea
+              class="patita-input"
+              id="patita-input"
+              placeholder="Pregunta algo sobre el backlog o los PRDs..."
+              rows="1"
+            ></textarea>
+            <button class="patita-send" id="patita-send">↑</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── Nuevo PRD modal ──────────────────────────────────────────── -->
+  <div class="modal-overlay" id="prd-modal-overlay">
+    <div class="modal-box" id="prd-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Nuevo PRD</h2>
+        <button class="panel-close" id="prd-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field" style="margin-bottom:16px">
+          <label class="form-label">Funcionalidad del Backlog</label>
+          <select class="form-control" id="prd-modal-backlog-select">
+            <option value="">Selecciona una funcionalidad...</option>
+          </select>
+          <span class="prd-modal-error" id="prd-modal-error"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Autor</label>
+          <input type="text" class="form-control" id="prd-modal-author" value="Nicolle" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="prd-modal-cancel">Cancelar</button>
+        <button class="btn btn-primary" id="prd-modal-create">Crear PRD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Slide panel ─────────────────────────────────────────────── -->
+  <div class="panel-overlay" id="panel-overlay"></div>
+  <div class="slide-panel" id="slide-panel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title" id="panel-title">Editar funcionalidad</div>
+        <div class="panel-id" id="panel-id"></div>
+      </div>
+      <button class="panel-close" id="panel-close">✕</button>
+    </div>
+    <div class="panel-body">
+
+      <div class="panel-section">
+        <div class="panel-section-title">Épica</div>
+        <div class="form-field">
+          <select class="form-control" id="edit-epic"></select>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Plataformas</div>
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label class="form-label">Web</label>
+            <select class="form-control" id="edit-web">
+              <option value="sin-especificar">Sin especificar</option>
+              <option value="en-especificacion">En especificación</option>
+              <option value="listo-para-dev">Listo para dev</option>
+              <option value="en-desarrollo">En desarrollo</option>
+              <option value="en-qa">En QA</option>
+              <option value="entregado">Entregado</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">iOS</label>
+            <select class="form-control" id="edit-ios">
+              <option value="sin-especificar">Sin especificar</option>
+              <option value="en-especificacion">En especificación</option>
+              <option value="listo-para-dev">Listo para dev</option>
+              <option value="en-desarrollo">En desarrollo</option>
+              <option value="en-qa">En QA</option>
+              <option value="entregado">Entregado</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Android</label>
+            <select class="form-control" id="edit-android">
+              <option value="sin-especificar">Sin especificar</option>
+              <option value="en-especificacion">En especificación</option>
+              <option value="listo-para-dev">Listo para dev</option>
+              <option value="en-desarrollo">En desarrollo</option>
+              <option value="en-qa">En QA</option>
+              <option value="entregado">Entregado</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">ATV</label>
+            <select class="form-control" id="edit-atv">
+              <option value="sin-especificar">Sin especificar</option>
+              <option value="en-especificacion">En especificación</option>
+              <option value="listo-para-dev">Listo para dev</option>
+              <option value="en-desarrollo">En desarrollo</option>
+              <option value="en-qa">En QA</option>
+              <option value="entregado">Entregado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Detalles</div>
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label class="form-label">Prioridad</label>
+            <select class="form-control" id="edit-priority">
+              <option value="alta">Alta</option>
+              <option value="media">Media</option>
+              <option value="baja">Baja</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Sprint</label>
+            <input type="text" class="form-control" id="edit-sprint" placeholder="ej. S03" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">Estado Figma</label>
+            <select class="form-control" id="edit-figma">
+              <option value="pendiente">Pendiente</option>
+              <option value="en-diseno">En diseño</option>
+              <option value="revision-pm">Revisión PM</option>
+              <option value="aprobado">Aprobado</option>
+              <option value="rechazado">Rechazado</option>
+            </select>
+          </div>
+          <div class="form-field" style="justify-content:flex-end;padding-bottom:2px">
+            <label class="form-label">PRD listo</label>
+            <div class="toggle-row">
+              <span class="toggle-label-text" id="prd-label">No</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="edit-prd" />
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Bloqueo</div>
+        <div class="form-field" style="margin-bottom:12px">
+          <label class="form-label">Bloqueado por</label>
+          <select class="form-control" id="edit-blocker">
+            <option value="">Ninguno</option>
+            <option value="Nicolle">Nicolle</option>
+            <option value="Equipo Técnico">Equipo Técnico</option>
+            <option value="UX">UX</option>
+            <option value="Legal">Legal</option>
+          </select>
+        </div>
+        <div class="form-field" id="blocker-reason-wrap">
+          <label class="form-label">Razón del bloqueo</label>
+          <textarea class="form-control" id="edit-blocker-reason" placeholder="Describe el bloqueo..."></textarea>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Notas</div>
+        <div class="form-field">
+          <textarea class="form-control" id="edit-notes" placeholder="Notas generales sobre esta funcionalidad..." style="min-height:96px"></textarea>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Links</div>
+        <div class="form-field" style="margin-bottom:12px">
+          <label class="form-label">Link del PRD</label>
+          <div class="link-field-row">
+            <input type="text" class="form-control" id="edit-link-prd" placeholder="https://..." />
+            <a class="btn-link-open" id="btn-open-prd" href="#" target="_blank" rel="noopener" style="display:none">Abrir ↗</a>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Link de Figma</label>
+          <div class="link-field-row">
+            <input type="text" class="form-control" id="edit-link-figma" placeholder="https://figma.com/..." />
+            <a class="btn-link-open" id="btn-open-figma" href="#" target="_blank" rel="noopener" style="display:none">Abrir ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-ghost" id="btn-cancel">Cancelar</button>
+      <button class="btn btn-primary" id="btn-save">Guardar cambios</button>
+    </div>
+  </div>
+
+  <!-- ── Toast container ──────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ── Nuevo modal ───────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="nuevo-modal-overlay">
+    <div class="modal-box nuevo-modal-box" id="nuevo-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Nuevo</h2>
+        <button class="panel-close" id="nuevo-modal-close">✕</button>
+      </div>
+      <div class="nuevo-tabs">
+        <button class="nuevo-tab active" data-tab="epic">Nueva Épica</button>
+        <button class="nuevo-tab" data-tab="feature">Nueva Funcionalidad</button>
+      </div>
+      <div class="nuevo-tab-panel" id="nuevo-panel-epic">
+        <div class="modal-body">
+          <div class="form-field">
+            <label class="form-label">Nombre de la épica</label>
+            <input type="text" class="form-control" id="nuevo-epic-name" placeholder="ej. Notificaciones" />
+            <span class="prd-modal-error" id="nuevo-epic-error"></span>
+          </div>
+        </div>
+      </div>
+      <div class="nuevo-tab-panel" id="nuevo-panel-feature" style="display:none">
+        <div class="modal-body">
+          <div class="form-field" style="margin-bottom:14px">
+            <label class="form-label">Nombre de la funcionalidad</label>
+            <input type="text" class="form-control" id="nuevo-feature-name" placeholder="ej. Notificaciones Push" />
+            <span class="prd-modal-error" id="nuevo-feature-error"></span>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Épica</label>
+            <select class="form-control" id="nuevo-feature-epic">
+              <option value="">Selecciona una épica...</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="nuevo-modal-cancel">Cancelar</button>
+        <button class="btn btn-primary" id="nuevo-modal-save">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/backlog.js"></script>
+  <script src="/js/prd.js"></script>
+  <script src="/js/patita.js"></script>
+</body>
+</html>
