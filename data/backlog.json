@@ -19,7 +19,12 @@
     "createdAt": "2026-05-28T04:54:07.836Z",
     "updatedAt": "2026-06-12T04:10:09.521Z",
     "linkPRD": "https://example.com/prd",
-    "linkFigma": ""
+    "linkFigma": "",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-012",
@@ -27,8 +32,8 @@
     "feature": "PDP Sharing",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -39,16 +44,21 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-013",
-    "epic": "Player",
+    "epic": "Players",
     "feature": "Timeline Preview",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -59,16 +69,21 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-12T04:37:43.677Z"
+    "updatedAt": "2026-06-12T05:12:58.332Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-014",
-    "epic": "Player",
+    "epic": "Players",
     "feature": "Live Timeline",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -79,7 +94,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-12T04:37:43.677Z"
+    "updatedAt": "2026-06-12T05:12:58.332Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-015",
@@ -97,15 +117,20 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-12T04:15:40.188Z"
+    "updatedAt": "2026-06-12T04:15:40.188Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-016",
     "epic": "Onboarding",
     "feature": "Modal de Cookies y Privacidad",
     "platforms": {
-      "ios": "en-desarrollo",
-      "android": "en-desarrollo"
+      "ios": "en-construccion",
+      "android": "en-construccion"
     },
     "priority": "media",
     "sprint": "",
@@ -117,7 +142,12 @@
     "createdAt": "2026-05-28T04:54:07.838Z",
     "updatedAt": "2026-06-12T04:59:58.338Z",
     "linkPRD": "",
-    "linkFigma": ""
+    "linkFigma": "",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-017",
@@ -125,8 +155,8 @@
     "feature": "Entry Points",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -137,7 +167,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-018",
@@ -145,8 +180,8 @@
     "feature": "Registro",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -157,7 +192,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-019",
@@ -165,8 +205,8 @@
     "feature": "Login",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -177,7 +217,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-020",
@@ -185,8 +230,8 @@
     "feature": "Social Login",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -197,7 +242,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-021",
@@ -205,8 +255,8 @@
     "feature": "Creación de Perfil",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -217,7 +267,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-022",
@@ -225,8 +280,8 @@
     "feature": "Edición de Perfil",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -237,7 +292,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-023",
@@ -245,8 +305,8 @@
     "feature": "Eliminar Perfil",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -257,7 +317,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-024",
@@ -265,8 +330,8 @@
     "feature": "Cambio de Contraseña",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -277,7 +342,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-025",
@@ -285,8 +355,8 @@
     "feature": "Eliminar Cuenta",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -297,7 +367,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-026",
@@ -305,8 +380,8 @@
     "feature": "Deep Links - Appsflyer",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -317,7 +392,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-027",
@@ -325,8 +405,8 @@
     "feature": "Estadísticas de Partidos",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -337,7 +417,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-028",
@@ -345,8 +430,8 @@
     "feature": "NPAW",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -357,7 +442,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-029",
@@ -365,8 +455,8 @@
     "feature": "Push Notifications - CleverTap",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -377,7 +467,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-030",
@@ -385,8 +480,8 @@
     "feature": "Recomendados (Because You Watched / More Like This)",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -397,7 +492,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-031",
@@ -405,8 +505,8 @@
     "feature": "Stories - Storyli",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -417,7 +517,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-032",
@@ -425,8 +530,8 @@
     "feature": "Comscore",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -437,7 +542,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-033",
@@ -445,8 +555,8 @@
     "feature": "Splash Screen",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -457,7 +567,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-034",
@@ -465,8 +580,8 @@
     "feature": "Casting",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -477,7 +592,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-035",
@@ -485,8 +605,8 @@
     "feature": "Microdramas",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -497,7 +617,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-036",
@@ -505,8 +630,8 @@
     "feature": "SVOD",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -517,7 +642,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-037",
@@ -525,8 +655,8 @@
     "feature": "Micropagos",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -537,7 +667,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-038",
@@ -545,8 +680,8 @@
     "feature": "Wallet",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -557,7 +692,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-05-28T04:54:07.838Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-039",
@@ -565,8 +705,8 @@
     "feature": "Seguridad de Cuentas (Modelo Netflix)",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -577,7 +717,12 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-12T03:57:17.457Z"
+    "updatedAt": "2026-06-12T03:57:17.457Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-040",
@@ -585,8 +730,8 @@
     "feature": "Búsqueda de Contenido Inteligente",
     "platforms": {
       "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
+      "ios": "backlog",
+      "android": "backlog",
       "atv": "sin-especificar"
     },
     "priority": "media",
@@ -597,15 +742,20 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-12T04:12:45.401Z"
+    "updatedAt": "2026-06-12T04:12:45.401Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   },
   {
     "id": "BL-041",
     "epic": "Prueba 801",
     "feature": "Prueba 800",
     "platforms": {
-      "ios": "sin-especificar",
-      "android": "sin-especificar"
+      "ios": "backlog",
+      "android": "backlog"
     },
     "priority": "media",
     "sprint": "",
@@ -617,6 +767,11 @@
     "linkPRD": "",
     "linkFigma": "",
     "createdAt": "2026-06-12T04:13:41.454Z",
-    "updatedAt": "2026-06-12T04:30:34.969Z"
+    "updatedAt": "2026-06-12T04:30:34.969Z",
+    "enBeta2026": true,
+    "uatFeedback": [],
+    "fechaCompromiso": "",
+    "fechaEntrega": "",
+    "fechaEntregaReal": ""
   }
 ]

@@ -1,12 +1,13 @@
 // ── Constants ──────────────────────────────────────────────────────────────
 
 const STATUS_LABELS = {
-  'sin-especificar':   'Sin especificar',
-  'en-especificacion': 'En especificación',
-  'listo-para-dev':    'Listo para dev',
-  'en-desarrollo':     'En desarrollo',
-  'en-qa':             'En QA',
-  'entregado':         'Entregado',
+  'backlog':          'Backlog',
+  'en-definicion':    'En definición',
+  'listo-para-dev':   'Listo para dev',
+  'en-construccion':  'En construcción',
+  'en-qa':            'En QA',
+  'uat':              'UAT',
+  'cerrado':          'Cerrado',
 };
 
 const PRIORITY_LABELS = { alta: 'Alta', media: 'Media', baja: 'Baja' };
@@ -29,6 +30,7 @@ const filterPlatform = document.getElementById('filter-platform');
 const filterStatus   = document.getElementById('filter-status');
 const filterBlocker  = document.getElementById('filter-blocker');
 const filterSearch   = document.getElementById('filter-search');
+const filterBeta     = document.getElementById('filter-beta');
 
 function applyFilters() {
   const epic     = filterEpic.value;
@@ -36,15 +38,18 @@ function applyFilters() {
   const status   = filterStatus.value;
   const blocker  = filterBlocker.value;
   const search   = filterSearch.value.trim().toLowerCase();
+  const beta     = filterBeta ? filterBeta.value : '';
 
   filteredItems = allItems.filter(item => {
     if (epic && item.epic !== epic) return false;
+    if (beta === 'beta'      && item.enBeta2026 === false) return false;
+    if (beta === 'evolutivo' && item.enBeta2026 !== false) return false;
     if (status && platform) {
       if (item.platforms[platform] !== status) return false;
     } else if (status) {
       if (!PLATFORMS.some(p => item.platforms[p] === status)) return false;
     } else if (platform) {
-      if (item.platforms[platform] === 'sin-especificar') return false;
+      if (item.platforms[platform] === 'backlog') return false;
     }
     if (blocker === '__sin-bloqueo') {
       if (item.blocker && item.blocker !== '') return false;
@@ -63,6 +68,7 @@ function applyFilters() {
 [filterEpic, filterPlatform, filterStatus, filterBlocker].forEach(el =>
   el.addEventListener('change', applyFilters)
 );
+if (filterBeta) filterBeta.addEventListener('change', applyFilters);
 filterSearch.addEventListener('input', applyFilters);
 
 document.getElementById('btn-clear-filters').addEventListener('click', clearFilters);
@@ -73,6 +79,7 @@ function clearFilters() {
   filterStatus.value = '';
   filterBlocker.value = '';
   filterSearch.value = '';
+  if (filterBeta) filterBeta.value = '';
   applyFilters();
 }
 
@@ -95,12 +102,13 @@ function statusPill(itemId, platform, status) {
 
 function statusDotColor(status) {
   const map = {
-    'sin-especificar': '#55556A',
-    'en-especificacion': '#3B82F6',
-    'listo-para-dev': '#F59E0B',
-    'en-desarrollo': '#7C3AED',
-    'en-qa': '#F97316',
-    'entregado': '#10B981',
+    'backlog':         '#55556A',
+    'en-definicion':   '#3B82F6',
+    'listo-para-dev':  '#F59E0B',
+    'en-construccion': '#7C3AED',
+    'en-qa':           '#F97316',
+    'uat':             '#06B6D4',
+    'cerrado':         '#10B981',
   };
   return map[status] || '#55556A';
 }
@@ -132,9 +140,12 @@ const COLGROUP = `<colgroup>
 </colgroup>`;
 
 function featureRowHtml(item) {
-  return `<tr class="feature-row" data-id="${item.id}">
+  const evolutivoBadge = item.enBeta2026 === false
+    ? '<span class="badge-evolutivo">Evolutivo</span>' : '';
+  const rowOpacity = item.enBeta2026 === false ? ' style="opacity:0.7"' : '';
+  return `<tr class="feature-row" data-id="${item.id}"${rowOpacity}>
     <td class="cell-id"><button class="drag-handle-row" title="Arrastrar">⠿</button><span>${item.id}</span></td>
-    <td class="cell-feature-name" data-id="${item.id}"><span class="feature-name-text">${item.feature}</span><button class="btn-edit-feature-name" title="Renombrar">✏</button></td>
+    <td class="cell-feature-name" data-id="${item.id}"><span class="feature-name-text">${item.feature}</span>${evolutivoBadge}<button class="btn-edit-feature-name" title="Renombrar">✏</button></td>
     ${prdIconCell(item)}
     <td class="col-ios-col">${statusPill(item.id, 'ios', item.platforms.ios)}</td>
     <td class="col-android-col">${statusPill(item.id, 'android', item.platforms.android)}</td>
@@ -196,15 +207,19 @@ function renderTable() {
     if (!filteredForEpic && !isGenuinelyEmpty) return;
     anyRendered = true;
 
-    const delivered  = allForEpic.filter(i =>
-      ['ios', 'android'].every(p => i.platforms[p] === 'entregado')
+    const betaItems  = allForEpic.filter(i => i.enBeta2026 !== false);
+    const evolutivos = allForEpic.length - betaItems.length;
+    const delivered  = betaItems.filter(i =>
+      ['ios', 'android'].every(p => i.platforms[p] === 'cerrado')
     ).length;
-    const pct        = allForEpic.length > 0 ? Math.round((delivered / allForEpic.length) * 100) : 0;
+    const pct        = betaItems.length > 0 ? Math.round((delivered / betaItems.length) * 100) : 0;
     const visible    = filteredForEpic ? filteredForEpic.length : 0;
     const isFiltered = visible < allForEpic.length;
+    const betaCountLabel = `${delivered}/${betaItems.length} · Beta 2026`;
+    const evLabel    = evolutivos > 0 ? ` · <span class="epic-evolutivos">+${evolutivos} futuro</span>` : '';
     const countLabel = isFiltered
       ? `${visible} de ${allForEpic.length} visibles`
-      : `${delivered}/${allForEpic.length} entregadas`;
+      : betaCountLabel + evLabel;
 
     const group = document.createElement('div');
     group.className   = 'epic-group';
@@ -462,12 +477,21 @@ function openEditPanel(id) {
   fechaRealEl.value = item.fechaEntregaReal || '';
   fechaRealEl.classList.toggle('date-real-set', !!(item.fechaEntregaReal));
 
+  const betaCheck = document.getElementById('edit-beta');
+  betaCheck.checked = item.enBeta2026 !== false;
+  document.getElementById('beta-label').textContent = betaCheck.checked ? 'Sí' : 'No';
+
+  renderUatSection(item);
   toggleBlockerReason(item.blocker);
   App.openPanel();
 }
 
 document.getElementById('edit-prd').addEventListener('change', function () {
   document.getElementById('prd-label').textContent = this.checked ? 'Sí' : 'No';
+});
+
+document.getElementById('edit-beta').addEventListener('change', function () {
+  document.getElementById('beta-label').textContent = this.checked ? 'Sí' : 'No';
 });
 
 document.getElementById('edit-blocker').addEventListener('change', function () {
@@ -506,6 +530,7 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     fechaCompromiso:   document.getElementById('edit-fecha-compromiso').value,
     fechaEntrega:      document.getElementById('edit-fecha-entrega').value,
     fechaEntregaReal:  document.getElementById('edit-fecha-real').value,
+    enBeta2026:        document.getElementById('edit-beta').checked,
   };
 
   try {
@@ -808,13 +833,13 @@ function updateEpicHeadersOnly() {
     const allForEpic = allItems.filter(i => i.epic === epicName);
     const visible    = group.querySelectorAll('.feature-row').length;
     const delivered  = allForEpic.filter(i =>
-      ['ios', 'android'].every(p => i.platforms[p] === 'entregado')
+      ['ios', 'android'].every(p => i.platforms[p] === 'cerrado')
     ).length;
     const pct        = allForEpic.length ? Math.round(delivered / allForEpic.length * 100) : 0;
     const isFiltered = visible < allForEpic.length;
     const label      = isFiltered
       ? `${visible} de ${allForEpic.length} visibles`
-      : `${delivered}/${allForEpic.length} entregadas`;
+      : `${delivered}/${allForEpic.filter(i=>i.enBeta2026!==false).length} · Beta 2026`;
     const fill  = group.querySelector('.epic-progress-bar-fill');
     const count = group.querySelector('.epic-count');
     if (fill)  fill.style.width  = `${pct}%`;
@@ -887,6 +912,122 @@ function initSortable() {
     });
     _featureSortables.push(s);
   });
+}
+
+// ── UAT Sign-off ──────────────────────────────────────────────────────────
+
+function renderUatSection(item) {
+  const section   = document.getElementById('uat-signoff-section');
+  const container = document.getElementById('uat-platforms-container');
+  const histSec   = document.getElementById('uat-history-section');
+  const histEl    = document.getElementById('uat-history-entries');
+  if (!section || !container) return;
+
+  const uatPlats = ['ios', 'android'].filter(p => item.platforms?.[p] === 'uat');
+  section.style.display = uatPlats.length ? '' : 'none';
+
+  if (uatPlats.length) {
+    container.innerHTML = uatPlats.map(p =>
+      `<div class="uat-plat-row" data-platform="${p}">
+        <span class="uat-plat-label">${p === 'ios' ? 'iOS' : 'Android'}</span>
+        <div class="uat-btn-row">
+          <button class="btn-uat-approve" data-platform="${p}">✓ Aprobar</button>
+          <button class="btn-uat-feedback" data-platform="${p}">↩ UAT con Feedback</button>
+        </div>
+        <div class="uat-fb-form" data-platform="${p}" style="display:none">
+          <textarea class="uat-fb-textarea form-control" placeholder="Describe qué debe corregir el equipo..." style="min-height:80px;border-color:var(--error)"></textarea>
+          <button class="btn-uat-submit" data-platform="${p}">Enviar feedback</button>
+        </div>
+      </div>`
+    ).join('');
+
+    // Approve
+    container.querySelectorAll('.btn-uat-approve').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const plat = btn.dataset.platform;
+        const today = new Date().toISOString().split('T')[0];
+        const item2 = allItems.find(i => i.id === editingId);
+        const platforms = { ...item2.platforms, [plat]: 'cerrado' };
+        const fechaEntregaReal = item2.fechaEntregaReal || today;
+        try {
+          const saved = await App.apiPut(`/api/backlog/${editingId}`, { platforms, fechaEntregaReal });
+          const idx = allItems.findIndex(i => i.id === editingId);
+          allItems[idx] = saved;
+          applyFilters(); updateStats();
+          document.getElementById('edit-' + plat).value = 'cerrado';
+          document.getElementById('edit-fecha-real').value = fechaEntregaReal;
+          renderUatSection(saved);
+          App.showToast(`✓ ${saved.feature} aprobada en ${plat === 'ios' ? 'iOS' : 'Android'}`);
+        } catch { App.showToast('Error al aprobar', 'error'); }
+      });
+    });
+
+    // UAT con feedback — show textarea
+    container.querySelectorAll('.btn-uat-feedback').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const form = container.querySelector(`.uat-fb-form[data-platform="${btn.dataset.platform}"]`);
+        if (form) form.style.display = form.style.display === 'none' ? '' : 'none';
+      });
+    });
+
+    // Submit feedback
+    container.querySelectorAll('.btn-uat-submit').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const plat   = btn.dataset.platform;
+        const form   = container.querySelector(`.uat-fb-form[data-platform="${plat}"]`);
+        const nota   = form?.querySelector('.uat-fb-textarea')?.value.trim();
+        if (!nota) { App.showToast('El feedback no puede estar vacío', 'error'); return; }
+        const item2 = allItems.find(i => i.id === editingId);
+        const platforms = { ...item2.platforms, [plat]: 'en-construccion' };
+        const uatFeedback = [...(item2.uatFeedback || []), {
+          plataforma: plat,
+          fecha: new Date().toISOString().split('T')[0],
+          nota,
+        }];
+        try {
+          const saved = await App.apiPut(`/api/backlog/${editingId}`, { platforms, uatFeedback });
+          const idx = allItems.findIndex(i => i.id === editingId);
+          allItems[idx] = saved;
+          applyFilters(); updateStats();
+          document.getElementById('edit-' + plat).value = 'en-construccion';
+          renderUatSection(saved);
+          App.showToast('↩ Regresado a construcción con feedback');
+        } catch { App.showToast('Error al enviar feedback', 'error'); }
+      });
+    });
+  }
+
+  // UAT feedback history
+  const feedback = item.uatFeedback || [];
+  if (histSec && histEl) {
+    histSec.style.display = feedback.length ? '' : 'none';
+    if (feedback.length) {
+      const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+      histEl.innerHTML = feedback.slice().reverse().map(f => {
+        const d = new Date(f.fecha + 'T00:00:00');
+        const fmtDate = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+        return `<div class="uat-hist-entry">
+          <div class="uat-hist-meta">
+            <span class="uat-hist-date">${fmtDate}</span>
+            <span class="uat-plat-label" style="font-size:10px">${f.plataforma === 'ios' ? 'iOS' : 'Android'}</span>
+          </div>
+          <div class="uat-hist-nota">${f.nota}</div>
+        </div>`;
+      }).join('<div class="uat-hist-sep"></div>');
+    }
+  }
+
+  // Toggle history
+  const togBtn = document.getElementById('uat-history-toggle');
+  if (togBtn) {
+    togBtn.onclick = () => {
+      const el = document.getElementById('uat-history-entries');
+      const open = el.style.display !== 'none';
+      el.style.display = open ? 'none' : '';
+      togBtn.textContent = (open ? '▸' : '▾') + ` Historial de feedback UAT (${feedback.length})`;
+    };
+    togBtn.textContent = `▸ Historial de feedback UAT (${feedback.length})`;
+  }
 }
 
 // ── Inline edit — epic name ────────────────────────────────────────────────

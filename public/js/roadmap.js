@@ -247,18 +247,18 @@ function delayBar(fcEpic, feEpic, estado) {
 }
 
 function featureCountRow(features) {
-  const counts = { entregado:0, 'en-desarrollo':0, bloqueadas:0, otro:0 };
+  const counts = { cerrado:0, 'en-construccion':0, bloqueadas:0, otro:0 };
   features.forEach(f => {
     const vals = Object.values(f.platforms||{});
-    const allDel = vals.length && vals.every(s=>s==='entregado');
-    if (allDel) counts.entregado++;
+    const allDel = vals.length && vals.every(s=>s==='cerrado');
+    if (allDel) counts.cerrado++;
     else if (f.blocker) counts.bloqueadas++;
-    else if (vals.some(s=>s==='en-desarrollo')) counts['en-desarrollo']++;
+    else if (vals.some(s=>s==='en-construccion')) counts['en-construccion']++;
     else counts.otro++;
   });
   const parts = [];
-  if (counts.entregado)       parts.push(`<span class="rm-fdot" style="background:var(--success)"></span>${counts.entregado} entregadas`);
-  if (counts['en-desarrollo']) parts.push(`<span class="rm-fdot" style="background:var(--purple-light)"></span>${counts['en-desarrollo']} en dev`);
+  if (counts.cerrado)            parts.push(`<span class="rm-fdot" style="background:var(--success)"></span>${counts.cerrado} cerradas`);
+  if (counts['en-construccion']) parts.push(`<span class="rm-fdot" style="background:var(--purple-light)"></span>${counts['en-construccion']} en dev`);
   if (counts.bloqueadas)       parts.push(`<span class="rm-fdot" style="background:var(--error)"></span>${counts.bloqueadas} bloq.`);
   if (counts.otro)             parts.push(`<span class="rm-fdot" style="background:var(--text-muted)"></span>${counts.otro} sin esp.`);
   return `<div class="rm-fcount">${parts.join('')}</div>`;

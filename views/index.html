@@ -114,12 +114,18 @@
           </select>
           <select id="filter-status">
             <option value="">Todos los estados</option>
-            <option value="sin-especificar">Sin especificar</option>
-            <option value="en-especificacion">En especificación</option>
+            <option value="backlog">Backlog</option>
+            <option value="en-definicion">En definición</option>
             <option value="listo-para-dev">Listo para dev</option>
-            <option value="en-desarrollo">En desarrollo</option>
+            <option value="en-construccion">En construcción</option>
             <option value="en-qa">En QA</option>
-            <option value="entregado">Entregado</option>
+            <option value="uat">UAT</option>
+            <option value="cerrado">Cerrado</option>
+          </select>
+          <select id="filter-beta">
+            <option value="">Beta 2026 + Evolutivos</option>
+            <option value="beta">Solo Beta 2026</option>
+            <option value="evolutivo">Solo Evolutivos</option>
           </select>
           <select id="filter-blocker">
             <option value="">Todos los bloqueos</option>
@@ -446,23 +452,25 @@
           <div class="form-field">
             <label class="form-label">iOS</label>
             <select class="form-control" id="edit-ios">
-              <option value="sin-especificar">Sin especificar</option>
-              <option value="en-especificacion">En especificación</option>
+              <option value="backlog">Backlog</option>
+              <option value="en-definicion">En definición</option>
               <option value="listo-para-dev">Listo para dev</option>
-              <option value="en-desarrollo">En desarrollo</option>
+              <option value="en-construccion">En construcción</option>
               <option value="en-qa">En QA</option>
-              <option value="entregado">Entregado</option>
+              <option value="uat">UAT</option>
+              <option value="cerrado">Cerrado</option>
             </select>
           </div>
           <div class="form-field">
             <label class="form-label">Android</label>
             <select class="form-control" id="edit-android">
-              <option value="sin-especificar">Sin especificar</option>
-              <option value="en-especificacion">En especificación</option>
+              <option value="backlog">Backlog</option>
+              <option value="en-definicion">En definición</option>
               <option value="listo-para-dev">Listo para dev</option>
-              <option value="en-desarrollo">En desarrollo</option>
+              <option value="en-construccion">En construcción</option>
               <option value="en-qa">En QA</option>
-              <option value="entregado">Entregado</option>
+              <option value="uat">UAT</option>
+              <option value="cerrado">Cerrado</option>
             </select>
           </div>
         </div>
@@ -504,6 +512,35 @@
               </label>
             </div>
           </div>
+          <div class="form-field" style="grid-column:1/-1">
+            <label class="form-label">Incluir en Beta 2026
+              <span style="display:block;font-size:10.5px;color:var(--text-muted);font-weight:400;margin-top:1px">Desactiva si es evolutivo para 2027+</span>
+            </label>
+            <div class="toggle-row">
+              <span class="toggle-label-text" id="beta-label">Sí</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="edit-beta" checked />
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UAT Sign-off section (shown dynamically) -->
+      <div id="uat-signoff-section" style="display:none" class="panel-section">
+        <div class="uat-signoff-box">
+          <div class="uat-signoff-head">
+            <span class="uat-signoff-title">Sign-off UAT</span>
+            <span class="uat-signoff-sub">Tu aprobación define si pasa a producción</span>
+          </div>
+          <div id="uat-platforms-container"></div>
+        </div>
+        <!-- UAT Feedback history -->
+        <div id="uat-history-section" style="display:none;margin-top:12px">
+          <button class="uat-history-toggle" id="uat-history-toggle">▸ Historial de feedback UAT</button>
+          <div class="uat-history-entries" id="uat-history-entries" style="display:none"></div>
         </div>
       </div>
 

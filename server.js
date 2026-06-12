@@ -104,9 +104,42 @@ function buildSeedItem(base) {
     fechaCompromiso: '',
     fechaEntrega: '',
     fechaEntregaReal: '',
+    enBeta2026: true,
+    uatFeedback: [],
     createdAt: now,
     updatedAt: now,
   };
+}
+
+const STATUS_MIGRATION = {
+  'sin-especificar':   'backlog',
+  'en-especificacion': 'en-definicion',
+  'listo-para-dev':    'listo-para-dev',
+  'en-desarrollo':     'en-construccion',
+  'en-qa':             'en-qa',
+  'entregado':         'cerrado',
+};
+
+function migrateBacklog() {
+  const items = readBacklog();
+  let changed = 0;
+  items.forEach(item => {
+    ['ios', 'android'].forEach(p => {
+      if (item.platforms?.[p] && STATUS_MIGRATION[item.platforms[p]] !== undefined && STATUS_MIGRATION[item.platforms[p]] !== item.platforms[p]) {
+        item.platforms[p] = STATUS_MIGRATION[item.platforms[p]];
+        changed++;
+      }
+    });
+    if (item.enBeta2026 === undefined)  { item.enBeta2026  = true;  changed++; }
+    if (!Array.isArray(item.uatFeedback)) { item.uatFeedback = [];  changed++; }
+    if (item.fechaCompromiso  === undefined) { item.fechaCompromiso  = ''; changed++; }
+    if (item.fechaEntrega     === undefined) { item.fechaEntrega     = ''; changed++; }
+    if (item.fechaEntregaReal === undefined) { item.fechaEntregaReal = ''; changed++; }
+  });
+  if (changed > 0) {
+    writeBacklog(items);
+    console.log(`✓ Migración completada — ${items.length} items procesados`);
+  }
 }
 
 function ensureDataFile() {
@@ -278,7 +311,7 @@ app.get('/api/backlog/stats', (req, res) => {
   const items = readBacklog();
   const total = items.length;
   const entregadas = items.filter(i =>
-    Object.values(i.platforms).every(s => s === 'entregado')
+    Object.values(i.platforms).every(s => s === 'cerrado')
   ).length;
   const enDesarrollo = items.filter(i =>
     Object.values(i.platforms).some(s => s === 'en-desarrollo')
@@ -290,7 +323,7 @@ app.get('/api/backlog/stats', (req, res) => {
   items.forEach(i => {
     if (!epicMap[i.epic]) epicMap[i.epic] = { epic: i.epic, total: 0, entregadas: 0 };
     epicMap[i.epic].total++;
-    if (Object.values(i.platforms).every(s => s === 'entregado')) {
+    if (Object.values(i.platforms).every(s => s === 'cerrado')) {
       epicMap[i.epic].entregadas++;
     }
   });
@@ -383,7 +416,7 @@ app.put('/api/backlog/:id', (req, res) => {
   }
   const merged = { ...items[idx], ...body, id: items[idx].id, updatedAt: new Date().toISOString() };
   // Auto-set fechaEntregaReal when all platforms reach "entregado"
-  const allDelivered = Object.values(merged.platforms || {}).every(s => s === 'entregado');
+  const allDelivered = Object.values(merged.platforms || {}).every(s => s === 'cerrado');
   if (allDelivered && !merged.fechaEntregaReal) {
     merged.fechaEntregaReal = new Date().toISOString().split('T')[0];
   }
@@ -534,7 +567,7 @@ app.get('/api/roadmap', (req, res) => {
   }
   function isDelivered(item) {
     return Object.values(item.platforms || {}).length > 0 &&
-           Object.values(item.platforms || {}).every(s => s === 'entregado');
+           Object.values(item.platforms || {}).every(s => s === 'cerrado');
   }
   function compliance(item) {
     const delivered = isDelivered(item);
@@ -552,7 +585,7 @@ app.get('/api/roadmap', (req, res) => {
     return { status: 'en-tiempo', deltaDias: d };
   }
 
-  const annotated = items.map(i => ({ ...i, _compliance: compliance(i), _delivered: isDelivered(i) }));
+  const annotated = items.filter(i => i.enBeta2026 !== false).map(i => ({ ...i, _compliance: compliance(i), _delivered: isDelivered(i) }));
   const withCommitment  = annotated.filter(i => i.fechaCompromiso);
   const deliveredDated  = annotated.filter(i => i._delivered && i.fechaCompromiso && i.fechaEntregaReal);
   const cumplidas       = deliveredDated.filter(i => ['cumplido','adelantado'].includes(i._compliance.status)).length;
@@ -608,6 +641,7 @@ app.get('*', (req, res) => {
 // ── Start ───────────────────────────────────────────────────────────────────
 
 ensureDataFile();
+migrateBacklog();
 ensurePRDFile();
 ensureEpicsFile();
 app.listen(PORT, () => {
