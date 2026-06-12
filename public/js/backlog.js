@@ -90,13 +90,6 @@ function statusPill(itemId, platform, status) {
   return `<div class="status-pill status-${status}" data-id="${itemId}" data-platform="${platform}" tabindex="0">
     <span class="status-dot"></span>
     <span>${label}</span>
-    <div class="status-dropdown" id="dd-${itemId}-${platform}">
-      ${Object.entries(STATUS_LABELS).map(([val, lbl]) => `
-        <div class="status-dropdown-item" data-value="${val}">
-          <span class="status-dot" style="background:${statusDotColor(val)}"></span>
-          ${lbl}
-        </div>`).join('')}
-    </div>
   </div>`;
 }
 
@@ -142,8 +135,8 @@ const COLGROUP = `<colgroup>
 function featureRowHtml(item) {
   const evolutivoBadge = item.enBeta2026 === false
     ? '<span class="badge-evolutivo">Evolutivo</span>' : '';
-  const rowOpacity = item.enBeta2026 === false ? ' style="opacity:0.7"' : '';
-  return `<tr class="feature-row" data-id="${item.id}"${rowOpacity}>
+  const rowClass = item.enBeta2026 === false ? ' class="feature-row feature-row-evo"' : ' class="feature-row"';
+  return `<tr${rowClass} data-id="${item.id}">
     <td class="cell-id"><button class="drag-handle-row" title="Arrastrar">⠿</button><span>${item.id}</span></td>
     <td class="cell-feature-name" data-id="${item.id}"><span class="feature-name-text">${item.feature}</span>${evolutivoBadge}<button class="btn-edit-feature-name" title="Renombrar">✏</button></td>
     ${prdIconCell(item)}
@@ -283,32 +276,30 @@ function attachTableEvents() {
   _tableEventsAttached = true;
   const table = document.getElementById('backlog-table');
 
-  // Status pill click — open/close dropdown
+  // Status pill click — open portal dropdown
   table.addEventListener('click', e => {
     const pill = e.target.closest('.status-pill');
-    const ddItem = e.target.closest('.status-dropdown-item');
-
-    if (ddItem && !pill) return; // handled below
-
-    if (ddItem) {
-      e.stopPropagation();
-      const newStatus = ddItem.dataset.value;
-      const outerPill = ddItem.closest('.status-pill');
-      const itemId    = outerPill.dataset.id;
-      const platform  = outerPill.dataset.platform;
-      updatePlatformStatus(itemId, platform, newStatus);
-      closeAllDropdowns();
-      return;
-    }
 
     if (pill) {
       e.stopPropagation();
-      const ddId = `dd-${pill.dataset.id}-${pill.dataset.platform}`;
-      const dd   = document.getElementById(ddId);
-      if (!dd) return;
-      const isOpen = dd.classList.contains('open');
-      closeAllDropdowns();
-      if (!isOpen) dd.classList.add('open');
+      const pillKey = `${pill.dataset.id}-${pill.dataset.platform}`;
+      const portal  = document.getElementById('dd-portal');
+      if (!portal) return;
+
+      if (portal.classList.contains('open') && portal.dataset.pill === pillKey) {
+        closeAllDropdowns(); return;
+      }
+
+      portal.innerHTML = Object.entries(STATUS_LABELS).map(([val, lbl]) =>
+        `<div class="status-dropdown-item" data-value="${val}" data-id="${pill.dataset.id}" data-platform="${pill.dataset.platform}">
+          <span class="status-dot" style="background:${statusDotColor(val)}"></span>${lbl}
+        </div>`).join('');
+
+      const rect = pill.getBoundingClientRect();
+      portal.style.top  = `${rect.bottom + 6}px`;
+      portal.style.left = `${rect.left}px`;
+      portal.dataset.pill = pillKey;
+      portal.classList.add('open');
       return;
     }
 
@@ -369,12 +360,24 @@ function attachTableEvents() {
 }
 
 function closeAllDropdowns() {
-  document.querySelectorAll('.status-dropdown.open').forEach(d => d.classList.remove('open'));
+  const portal = document.getElementById('dd-portal');
+  if (portal) portal.classList.remove('open');
   activeDropdown = null;
 }
 
+// Portal dropdown item click
+document.getElementById('dd-portal')?.addEventListener('click', e => {
+  const ddItem = e.target.closest('.status-dropdown-item');
+  if (!ddItem) return;
+  e.stopPropagation();
+  updatePlatformStatus(ddItem.dataset.id, ddItem.dataset.platform, ddItem.dataset.value);
+  closeAllDropdowns();
+});
+
 document.addEventListener('click', e => {
-  if (!e.target.closest('.status-pill')) closeAllDropdowns();
+  if (!e.target.closest('.status-pill') && !e.target.closest('#dd-portal')) {
+    closeAllDropdowns();
+  }
 });
 
 // ── Status quick-update ────────────────────────────────────────────────────
