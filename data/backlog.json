@@ -1,7 +1,7 @@
 [
   {
     "id": "BL-001",
-    "epic": "PDP Sharing",
+    "epic": "EPG",
     "feature": "Cluster Tabs",
     "platforms": {
       "web": "sin-especificar",
@@ -14,214 +14,12 @@
     "figmaStatus": "aprobado",
     "prdReady": true,
     "blocker": "",
-    "blockerReason": "",
+    "blockerReason": "pipeline",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.836Z",
-    "updatedAt": "2026-05-28T18:39:32.260Z",
+    "updatedAt": "2026-06-12T04:10:09.521Z",
     "linkPRD": "https://example.com/prd",
     "linkFigma": ""
-  },
-  {
-    "id": "BL-002",
-    "epic": "Home",
-    "feature": "Hero Dinámico",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "listo-para-dev",
-      "android": "listo-para-dev",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": true,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T05:17:20.240Z"
-  },
-  {
-    "id": "BL-003",
-    "epic": "Home",
-    "feature": "Stories",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "listo-para-dev",
-      "android": "listo-para-dev",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-02T18:12:58.419Z"
-  },
-  {
-    "id": "BL-004",
-    "epic": "Home",
-    "feature": "Top 10",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "listo-para-dev",
-      "android": "listo-para-dev",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "aprobado",
-    "prdReady": true,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T05:27:49.721Z"
-  },
-  {
-    "id": "BL-005",
-    "epic": "Home",
-    "feature": "Hubs",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "listo-para-dev",
-      "android": "listo-para-dev",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-02T18:12:50.887Z",
-    "linkPRD": "",
-    "linkFigma": ""
-  },
-  {
-    "id": "BL-006",
-    "epic": "Home",
-    "feature": "Collection",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
-  },
-  {
-    "id": "BL-007",
-    "epic": "Home",
-    "feature": "Banners Publicitarios",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
-  },
-  {
-    "id": "BL-008",
-    "epic": "Home",
-    "feature": "Carrusel Categorías",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
-  },
-  {
-    "id": "BL-009",
-    "epic": "Home",
-    "feature": "Menú Navegación",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
-  },
-  {
-    "id": "BL-010",
-    "epic": "Home",
-    "feature": "Continuar Viendo",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
-  },
-  {
-    "id": "BL-011",
-    "epic": "Home",
-    "feature": "Mi Lista",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
   },
   {
     "id": "BL-012",
@@ -245,7 +43,7 @@
   },
   {
     "id": "BL-013",
-    "epic": "Player Live y VOD",
+    "epic": "Player",
     "feature": "Timeline Preview",
     "platforms": {
       "web": "sin-especificar",
@@ -261,11 +59,11 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-06-12T04:37:43.677Z"
   },
   {
     "id": "BL-014",
-    "epic": "Player Live y VOD",
+    "epic": "Player",
     "feature": "Live Timeline",
     "platforms": {
       "web": "sin-especificar",
@@ -281,17 +79,15 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-06-02T18:11:07.411Z"
+    "updatedAt": "2026-06-12T04:37:43.677Z"
   },
   {
     "id": "BL-015",
     "epic": "EPG",
     "feature": "Electronic Program Guide",
     "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
+      "ios": "listo-para-dev",
+      "android": "listo-para-dev"
     },
     "priority": "media",
     "sprint": "",
@@ -301,27 +97,27 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-06-12T04:15:40.188Z"
   },
   {
     "id": "BL-016",
-    "epic": "Ads Consent Management",
+    "epic": "Onboarding",
     "feature": "Modal de Cookies y Privacidad",
     "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
+      "ios": "en-desarrollo",
+      "android": "en-desarrollo"
     },
     "priority": "media",
     "sprint": "",
     "figmaStatus": "pendiente",
-    "prdReady": false,
+    "prdReady": true,
     "blocker": "",
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-06-12T04:59:58.338Z",
+    "linkPRD": "",
+    "linkFigma": ""
   },
   {
     "id": "BL-017",
@@ -781,7 +577,7 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-06-12T03:57:17.457Z"
   },
   {
     "id": "BL-040",
@@ -801,17 +597,15 @@
     "blockerReason": "",
     "notes": "",
     "createdAt": "2026-05-28T04:54:07.838Z",
-    "updatedAt": "2026-05-28T04:54:07.838Z"
+    "updatedAt": "2026-06-12T04:12:45.401Z"
   },
   {
     "id": "BL-041",
-    "epic": "PDP Sharing",
-    "feature": "Feature Test 1779993454384",
+    "epic": "Prueba 801",
+    "feature": "Prueba 800",
     "platforms": {
-      "web": "sin-especificar",
       "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
+      "android": "sin-especificar"
     },
     "priority": "media",
     "sprint": "",
@@ -822,29 +616,7 @@
     "notes": "",
     "linkPRD": "",
     "linkFigma": "",
-    "createdAt": "2026-05-28T18:37:37.316Z",
-    "updatedAt": "2026-05-28T18:37:37.316Z"
-  },
-  {
-    "id": "BL-042",
-    "epic": "Home",
-    "feature": "Feature Test 1779993564907",
-    "platforms": {
-      "web": "sin-especificar",
-      "ios": "sin-especificar",
-      "android": "sin-especificar",
-      "atv": "sin-especificar"
-    },
-    "priority": "media",
-    "sprint": "",
-    "figmaStatus": "pendiente",
-    "prdReady": false,
-    "blocker": "",
-    "blockerReason": "",
-    "notes": "",
-    "linkPRD": "https://example.com/prd",
-    "linkFigma": "",
-    "createdAt": "2026-05-28T18:39:28.682Z",
-    "updatedAt": "2026-05-28T18:39:36.498Z"
+    "createdAt": "2026-06-12T04:13:41.454Z",
+    "updatedAt": "2026-06-12T04:30:34.969Z"
   }
 ]

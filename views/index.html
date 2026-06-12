@@ -38,25 +38,12 @@
           <span class="nav-label">PatitaPM</span>
         </div>
 
-        <div class="nav-item disabled">
-          <span class="nav-icon">🎨</span>
-          <span class="nav-label">Figma Tracker</span>
-          <span class="nav-badge">Próximo</span>
-        </div>
-
-        <div class="nav-item disabled">
+        <div class="nav-item" data-page="roadmap">
           <span class="nav-icon">🗓️</span>
           <span class="nav-label">Roadmap</span>
-          <span class="nav-badge">Próximo</span>
         </div>
 
-        <div class="nav-item disabled">
-          <span class="nav-icon">📊</span>
-          <span class="nav-label">Status Report</span>
-          <span class="nav-badge">Próximo</span>
-        </div>
-
-        <div class="nav-item disabled">
+        <div class="nav-item disabled" style="display:none">
           <span class="nav-icon">📝</span>
           <span class="nav-label">Decision Log</span>
           <span class="nav-badge">Próximo</span>
@@ -122,10 +109,8 @@
           </select>
           <select id="filter-platform">
             <option value="">Todas las plataformas</option>
-            <option value="web">Web</option>
             <option value="ios">iOS</option>
             <option value="android">Android</option>
-            <option value="atv">ATV</option>
           </select>
           <select id="filter-status">
             <option value="">Todos los estados</option>
@@ -148,47 +133,26 @@
             <button class="btn btn-ghost" id="btn-columns">Columnas ⚙</button>
             <div class="columns-popover" id="columns-popover">
               <div class="columns-popover-title">Mostrar plataformas</div>
-              <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="web" checked /><span>Web</span></label>
               <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="ios" checked /><span>iOS</span></label>
               <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="android" checked /><span>Android</span></label>
-              <label class="columns-toggle-row"><input type="checkbox" class="col-toggle" data-col="atv" checked /><span>Android TV</span></label>
             </div>
           </div>
         </div>
 
         <!-- Table -->
         <div class="table-wrapper">
-          <table class="backlog-table" id="backlog-table">
-            <colgroup>
-              <col class="col-id" />
-              <col class="col-feature" />
-              <col class="col-prd-icon" />
-              <col class="col-plat col-web-col" />
-              <col class="col-plat col-ios-col" />
-              <col class="col-plat col-android-col" />
-              <col class="col-plat col-atv-col" />
-              <col class="col-prio" />
-              <col class="col-bloqueo" />
-              <col class="col-actions" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Funcionalidad</th>
-                <th class="th-prd-icon">PRD</th>
-                <th class="col-web-col">Web</th>
-                <th class="col-ios-col">iOS</th>
-                <th class="col-android-col">Android</th>
-                <th class="col-atv-col">ATV</th>
-                <th>Prioridad</th>
-                <th>Bloqueo</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="backlog-tbody">
-              <tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-muted)">Cargando...</td></tr>
-            </tbody>
-          </table>
+          <div class="backlog-table" id="backlog-table">
+            <div class="bt-head">
+              <div class="bt-th">ID</div>
+              <div class="bt-th">Funcionalidad</div>
+              <div class="bt-th bt-center col-prd-icon">PRD</div>
+              <div class="bt-th bt-center col-ios-col">iOS</div>
+              <div class="bt-th bt-center col-android-col">Android</div>
+              <div class="bt-th bt-center">Prioridad</div>
+              <div class="bt-th bt-center">Bloqueo</div>
+              <div class="bt-th bt-center">Acciones</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -305,20 +269,12 @@
             <div class="prd-section-title">5. Criterios de Aceptación</div>
             <div class="prd-ac-grid">
               <div class="prd-ac-item">
-                <label class="form-label">Web</label>
-                <textarea class="form-control prd-textarea" id="prd-ac-web" placeholder="Criterios para Web..."></textarea>
-              </div>
-              <div class="prd-ac-item">
                 <label class="form-label">iOS</label>
                 <textarea class="form-control prd-textarea" id="prd-ac-ios" placeholder="Criterios para iOS..."></textarea>
               </div>
               <div class="prd-ac-item">
                 <label class="form-label">Android</label>
                 <textarea class="form-control prd-textarea" id="prd-ac-android" placeholder="Criterios para Android..."></textarea>
-              </div>
-              <div class="prd-ac-item">
-                <label class="form-label">ATV</label>
-                <textarea class="form-control prd-textarea" id="prd-ac-atv" placeholder="Criterios para ATV..."></textarea>
               </div>
             </div>
           </div>
@@ -393,6 +349,48 @@
         </div>
       </section>
 
+      <!-- ROADMAP PAGE -->
+      <section id="page-roadmap" class="page">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Roadmap</h1>
+            <p class="page-subtitle">Seguimiento de entregas y cumplimiento del equipo técnico</p>
+          </div>
+          <div class="page-header-actions">
+            <button class="btn btn-ghost" onclick="window.print()">↓ Exportar PDF</button>
+          </div>
+        </div>
+        <!-- Metric cards -->
+        <div class="stats-grid" id="rm-metrics-grid"></div>
+        <!-- Risk banner -->
+        <div id="rm-risk-banner" style="display:none" class="rm-risk-banner"></div>
+        <!-- Controls -->
+        <div class="rm-controls">
+          <div class="view-toggle" id="rm-view-toggle">
+            <button class="vtog-btn active" data-view="ejecutiva">Vista Ejecutiva</button>
+            <button class="vtog-btn" data-view="operativa">Vista Operativa</button>
+          </div>
+          <div class="filter-bar rm-filter-bar">
+            <select id="rm-filter-epic"><option value="">Todas las épicas</option></select>
+            <select id="rm-filter-platform">
+              <option value="">Todas las plataformas</option>
+              <option value="ios">iOS</option>
+              <option value="android">Android</option>
+            </select>
+            <select id="rm-filter-compliance">
+              <option value="">Cumplimiento — Todos</option>
+              <option value="en-tiempo">En tiempo</option>
+              <option value="retrasado-activo">En retraso</option>
+              <option value="adelantado">Adelantados</option>
+              <option value="sin-fecha">Sin fecha</option>
+            </select>
+            <button class="btn-clear" id="rm-btn-clear">Limpiar filtros</button>
+          </div>
+        </div>
+        <!-- Main content -->
+        <div id="rm-content"><div class="rm-loading">Cargando roadmap…</div></div>
+      </section>
+
     </main>
   </div>
 
@@ -427,8 +425,8 @@
   <div class="panel-overlay" id="panel-overlay"></div>
   <div class="slide-panel" id="slide-panel">
     <div class="panel-header">
-      <div>
-        <div class="panel-title" id="panel-title">Editar funcionalidad</div>
+      <div style="flex:1;min-width:0;margin-right:10px">
+        <input class="panel-feature-name-input" id="panel-feature-name" type="text" placeholder="Nombre de la funcionalidad" />
         <div class="panel-id" id="panel-id"></div>
       </div>
       <button class="panel-close" id="panel-close">✕</button>
@@ -446,17 +444,6 @@
         <div class="panel-section-title">Plataformas</div>
         <div class="form-grid-2">
           <div class="form-field">
-            <label class="form-label">Web</label>
-            <select class="form-control" id="edit-web">
-              <option value="sin-especificar">Sin especificar</option>
-              <option value="en-especificacion">En especificación</option>
-              <option value="listo-para-dev">Listo para dev</option>
-              <option value="en-desarrollo">En desarrollo</option>
-              <option value="en-qa">En QA</option>
-              <option value="entregado">Entregado</option>
-            </select>
-          </div>
-          <div class="form-field">
             <label class="form-label">iOS</label>
             <select class="form-control" id="edit-ios">
               <option value="sin-especificar">Sin especificar</option>
@@ -470,17 +457,6 @@
           <div class="form-field">
             <label class="form-label">Android</label>
             <select class="form-control" id="edit-android">
-              <option value="sin-especificar">Sin especificar</option>
-              <option value="en-especificacion">En especificación</option>
-              <option value="listo-para-dev">Listo para dev</option>
-              <option value="en-desarrollo">En desarrollo</option>
-              <option value="en-qa">En QA</option>
-              <option value="entregado">Entregado</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label class="form-label">ATV</label>
-            <select class="form-control" id="edit-atv">
               <option value="sin-especificar">Sin especificar</option>
               <option value="en-especificacion">En especificación</option>
               <option value="listo-para-dev">Listo para dev</option>
@@ -527,6 +503,27 @@
                 <span class="toggle-thumb"></span>
               </label>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Fechas de entrega</div>
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label class="form-label date-label-tooltip">
+              Fecha de compromiso (Tech)
+              <span class="date-tooltip" title="Fecha que el equipo técnico se comprometió a entregar">?</span>
+            </label>
+            <input type="date" class="form-control" id="edit-fecha-compromiso" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">Fecha estimada actual</label>
+            <input type="date" class="form-control" id="edit-fecha-entrega" />
+          </div>
+          <div class="form-field" style="grid-column:1/-1">
+            <label class="form-label">Fecha de entrega real</label>
+            <input type="date" class="form-control date-real-input" id="edit-fecha-real" />
           </div>
         </div>
       </div>
@@ -579,6 +576,26 @@
       <button class="btn btn-ghost" id="btn-cancel">Cancelar</button>
       <button class="btn btn-primary" id="btn-save">Guardar cambios</button>
     </div>
+    <div class="panel-delete-zone">
+      <button class="btn-delete-feature" id="btn-delete-feature">Eliminar funcionalidad</button>
+    </div>
+  </div>
+
+  <!-- ── Confirm delete modal ─────────────────────────────────────── -->
+  <div class="modal-overlay" id="confirm-delete-overlay">
+    <div class="modal-box confirm-delete-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="confirm-delete-title">¿Eliminar?</h2>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-delete-msg" id="confirm-delete-msg"></p>
+        <p class="confirm-delete-warn">Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="confirm-delete-cancel">Cancelar</button>
+        <button class="btn btn-danger" id="confirm-delete-ok">Sí, eliminar</button>
+      </div>
+    </div>
   </div>
 
   <!-- ── Toast container ──────────────────────────────────────────── -->
@@ -626,9 +643,11 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/backlog.js"></script>
   <script src="/js/prd.js"></script>
   <script src="/js/patita.js"></script>
+  <script src="/js/roadmap.js"></script>
 </body>
 </html>

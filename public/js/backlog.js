@@ -10,8 +10,8 @@ const STATUS_LABELS = {
 };
 
 const PRIORITY_LABELS = { alta: 'Alta', media: 'Media', baja: 'Baja' };
-const PLATFORMS = ['web', 'ios', 'android', 'atv'];
-const PLATFORM_LABELS = { web: 'Web', ios: 'iOS', android: 'Android', atv: 'ATV' };
+const PLATFORMS = ['ios', 'android'];
+const PLATFORM_LABELS = { ios: 'iOS', android: 'Android' };
 
 // ── State ──────────────────────────────────────────────────────────────────
 
@@ -20,7 +20,7 @@ let filteredItems = [];
 let editingId = null;
 let activeDropdown = null;
 let allEpics = [];
-let visiblePlatforms = { web: true, ios: true, android: true, atv: true };
+let visiblePlatforms = { ios: true, android: true };
 
 // ── Filters ────────────────────────────────────────────────────────────────
 
@@ -44,7 +44,7 @@ function applyFilters() {
     } else if (status) {
       if (!PLATFORMS.some(p => item.platforms[p] === status)) return false;
     } else if (platform) {
-      // platform selected but no status filter — still pass
+      if (item.platforms[platform] === 'sin-especificar') return false;
     }
     if (blocker === '__sin-bloqueo') {
       if (item.blocker && item.blocker !== '') return false;
@@ -125,25 +125,58 @@ function prdIconCell(item) {
   return `<td class="td-prd-icon"><span class="prd-icon-empty" title="Sin PRD">📄</span></td>`;
 }
 
-function renderTable() {
-  const tbody = document.getElementById('backlog-tbody');
+const COLGROUP = `<colgroup>
+  <col class="col-id" /><col class="col-feature" /><col class="col-prd-icon" />
+  <col class="col-plat col-ios-col" /><col class="col-plat col-android-col" />
+  <col class="col-prio" /><col class="col-bloqueo" /><col class="col-actions" />
+</colgroup>`;
 
-  // Epic order: items-derived (insertion order) + extra epics with no items
+function featureRowHtml(item) {
+  return `<tr class="feature-row" data-id="${item.id}">
+    <td class="cell-id"><button class="drag-handle-row" title="Arrastrar">⠿</button><span>${item.id}</span></td>
+    <td class="cell-feature-name" data-id="${item.id}"><span class="feature-name-text">${item.feature}</span><button class="btn-edit-feature-name" title="Renombrar">✏</button></td>
+    ${prdIconCell(item)}
+    <td class="col-ios-col">${statusPill(item.id, 'ios', item.platforms.ios)}</td>
+    <td class="col-android-col">${statusPill(item.id, 'android', item.platforms.android)}</td>
+    <td style="text-align:center">${priorityBadge(item.priority)}</td>
+    <td style="text-align:center">${blockerPill(item.blocker)}</td>
+    <td>
+      <div class="actions-cell">
+        <button class="btn-icon edit-btn" data-id="${item.id}" title="Editar">✏</button>
+        <button class="btn-icon notes-btn" data-id="${item.id}" title="${item.notes ? 'Ver notas' : 'Sin notas'}" style="${item.notes ? 'color:var(--warning)' : ''}">📝</button>
+      </div>
+    </td>
+  </tr>`;
+}
+
+const EMPTY_STATE_HTML = `<tr><td colspan="8"><div class="empty-state">
+  <div class="empty-state-icon">🔍</div>
+  <p>No se encontraron funcionalidades con estos filtros</p>
+  <button class="btn btn-ghost" onclick="clearFilters()">Limpiar filtros</button>
+</div></td></tr>`;
+
+function renderTable() {
+  const container = document.getElementById('backlog-table');
+  // Remove previous epic groups and empty states (keep .bt-head)
+  container.querySelectorAll('.epic-group, .empty-state-wrapper').forEach(el => el.remove());
+
   const epicFromItems = [...new Set(allItems.map(i => i.epic))];
-  const epicOrder = [...new Set([...epicFromItems, ...allEpics])];
+  const rawOrder      = [...new Set([...epicFromItems, ...allEpics])];
+  const epicOrder     = loadEpicOrder(rawOrder);
 
   const hasFilteredItems = filteredItems.length > 0;
-  const hasAnyEpics = epicOrder.length > 0;
+  const hasAnyEpics      = epicOrder.length > 0;
 
   if (!hasFilteredItems && !hasAnyEpics) {
-    tbody.innerHTML = `
-      <tr><td colspan="10">
-        <div class="empty-state">
-          <div class="empty-state-icon">🔍</div>
-          <p>No se encontraron funcionalidades con estos filtros</p>
-          <button class="btn btn-ghost" onclick="clearFilters()">Limpiar filtros</button>
-        </div>
-      </td></tr>`;
+    const empty = document.createElement('div');
+    empty.className = 'empty-state-wrapper';
+    empty.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">🔍</div>
+      <p>No se encontraron funcionalidades con estos filtros</p>
+      <button class="btn btn-ghost" onclick="clearFilters()">Limpiar filtros</button>
+    </div>`;
+    container.appendChild(empty);
+    attachTableEvents();
     return;
   }
 
@@ -153,81 +186,90 @@ function renderTable() {
     groups[item.epic].push(item);
   });
 
-  let html = '';
+  let anyRendered = false;
 
   epicOrder.forEach(epic => {
-    const filteredForEpic = groups[epic];
-    const allForEpic = allItems.filter(i => i.epic === epic);
+    const filteredForEpic  = groups[epic];
+    const allForEpic       = allItems.filter(i => i.epic === epic);
     const isGenuinelyEmpty = allForEpic.length === 0;
 
-    // Skip epics with items that are all filtered out
     if (!filteredForEpic && !isGenuinelyEmpty) return;
+    anyRendered = true;
 
-    const epicDelivered = allForEpic.filter(i =>
-      PLATFORMS.every(p => i.platforms[p] === 'entregado')
+    const delivered  = allForEpic.filter(i =>
+      ['ios', 'android'].every(p => i.platforms[p] === 'entregado')
     ).length;
-    const pct = allForEpic.length > 0 ? Math.round((epicDelivered / allForEpic.length) * 100) : 0;
+    const pct        = allForEpic.length > 0 ? Math.round((delivered / allForEpic.length) * 100) : 0;
+    const visible    = filteredForEpic ? filteredForEpic.length : 0;
+    const isFiltered = visible < allForEpic.length;
+    const countLabel = isFiltered
+      ? `${visible} de ${allForEpic.length} visibles`
+      : `${delivered}/${allForEpic.length} entregadas`;
 
-    html += `<tr class="epic-row">
-      <td colspan="10">
-        <div class="epic-header">
-          <span class="epic-name">${epic}</span>
-          <div class="epic-progress-wrap">
-            <div class="epic-progress-bar-bg">
-              <div class="epic-progress-bar-fill" style="width:${pct}%"></div>
-            </div>
+    const group = document.createElement('div');
+    group.className   = 'epic-group';
+    group.dataset.epic = epic;
+
+    // Epic header row
+    let html = `<div class="epic-row">
+      <div class="epic-header">
+        <button class="drag-handle-epic" title="Arrastrar épica">⠿</button>
+        <span class="epic-name">${epic}</span>
+        <button class="btn-edit-epic-name" title="Renombrar épica">✏</button>
+        <div class="epic-progress-wrap">
+          <div class="epic-progress-bar-bg">
+            <div class="epic-progress-bar-fill" style="width:${pct}%"></div>
           </div>
-          <span class="epic-count">${epicDelivered}/${allForEpic.length} entregadas</span>
         </div>
-      </td>
-    </tr>`;
+        <span class="epic-count">${countLabel}</span>
+        <button class="btn-delete-epic" data-epic="${epic}" title="Eliminar épica">🗑</button>
+      </div>
+    </div>`;
+
+    const rows = isGenuinelyEmpty
+      ? ''
+      : loadFeatureOrder(epic, filteredForEpic).map(item => featureRowHtml(item)).join('');
 
     if (isGenuinelyEmpty) {
-      html += `<tr><td colspan="10" class="empty-epic-cell">Sin funcionalidades aún — agrega una</td></tr>`;
-    } else {
-      filteredForEpic.forEach(item => {
-        html += `<tr data-id="${item.id}">
-          <td class="cell-id">${item.id}</td>
-          <td style="color:var(--text-primary)">${item.feature}</td>
-          ${prdIconCell(item)}
-          <td class="col-web-col">${statusPill(item.id, 'web', item.platforms.web)}</td>
-          <td class="col-ios-col">${statusPill(item.id, 'ios', item.platforms.ios)}</td>
-          <td class="col-android-col">${statusPill(item.id, 'android', item.platforms.android)}</td>
-          <td class="col-atv-col">${statusPill(item.id, 'atv', item.platforms.atv)}</td>
-          <td>${priorityBadge(item.priority)}</td>
-          <td>${blockerPill(item.blocker)}</td>
-          <td>
-            <div class="actions-cell">
-              <button class="btn-icon edit-btn" data-id="${item.id}" title="Editar">✏</button>
-              <button class="btn-icon notes-btn" data-id="${item.id}" title="${item.notes ? 'Ver notas' : 'Sin notas'}" style="${item.notes ? 'color:var(--warning)' : ''}">📝</button>
-            </div>
-          </td>
-        </tr>`;
-      });
+      html += `<div class="empty-epic-cell">Sin funcionalidades aún — agrega una</div>`;
     }
+
+    // Always render the features-table so empty epics can receive drops
+    html += `<table class="features-table">
+      ${COLGROUP}
+      <tbody data-epic="${epic}">${rows}</tbody>
+    </table>`;
+
+    group.innerHTML = html;
+    container.appendChild(group);
   });
 
-  if (!html) {
-    html = `<tr><td colspan="10">
-      <div class="empty-state">
-        <div class="empty-state-icon">🔍</div>
-        <p>No se encontraron funcionalidades con estos filtros</p>
-        <button class="btn btn-ghost" onclick="clearFilters()">Limpiar filtros</button>
-      </div>
-    </td></tr>`;
+  if (!anyRendered) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state-wrapper';
+    empty.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">🔍</div>
+      <p>No se encontraron funcionalidades con estos filtros</p>
+      <button class="btn btn-ghost" onclick="clearFilters()">Limpiar filtros</button>
+    </div>`;
+    container.appendChild(empty);
   }
 
-  tbody.innerHTML = html;
   attachTableEvents();
+  initSortable();
 }
 
 // ── Table event delegation ─────────────────────────────────────────────────
 
+let _tableEventsAttached = false;
+
 function attachTableEvents() {
-  const tbody = document.getElementById('backlog-tbody');
+  if (_tableEventsAttached) return;
+  _tableEventsAttached = true;
+  const table = document.getElementById('backlog-table');
 
   // Status pill click — open/close dropdown
-  tbody.addEventListener('click', e => {
+  table.addEventListener('click', e => {
     const pill = e.target.closest('.status-pill');
     const ddItem = e.target.closest('.status-dropdown-item');
 
@@ -267,6 +309,43 @@ function attachTableEvents() {
     if (notesBtn) {
       openEditPanel(notesBtn.dataset.id);
       setTimeout(() => document.getElementById('edit-notes').focus(), 350);
+      return;
+    }
+
+    // Inline edit epic name
+    const editEpicBtn = e.target.closest('.btn-edit-epic-name');
+    if (editEpicBtn) {
+      e.stopPropagation();
+      startInlineEpicEdit(editEpicBtn);
+      return;
+    }
+
+    // Inline edit feature name
+    const editFeatBtn = e.target.closest('.btn-edit-feature-name');
+    if (editFeatBtn) {
+      e.stopPropagation();
+      startInlineFeatureEdit(editFeatBtn);
+      return;
+    }
+
+    // Delete epic button
+    const deleteEpicBtn = e.target.closest('.btn-delete-epic');
+    if (deleteEpicBtn) {
+      e.stopPropagation();
+      const epicName = deleteEpicBtn.dataset.epic;
+      const count = allItems.filter(i => i.epic === epicName).length;
+      const msg = count > 0
+        ? `¿Eliminar la épica "${epicName}"?\nSe eliminarán también sus ${count} funcionalidad${count !== 1 ? 'es' : ''}.`
+        : `¿Eliminar la épica "${epicName}"?`;
+      showConfirmDelete(msg, `Sí, eliminar todo`, async () => {
+        await App.apiDelete(`/api/backlog/epic/${encodeURIComponent(epicName)}`);
+        allItems     = allItems.filter(i => i.epic !== epicName);
+        filteredItems = filteredItems.filter(i => i.epic !== epicName);
+        allEpics      = allEpics.filter(e => e !== epicName);
+        renderTable();
+        updateStats();
+        App.showToast('✓ Épica eliminada');
+      });
       return;
     }
 
@@ -337,15 +416,13 @@ function openEditPanel(id) {
   if (!item) return;
   editingId = id;
 
-  document.getElementById('panel-title').textContent = `Editar — ${item.feature}`;
-  document.getElementById('panel-id').textContent    = item.id;
+  document.getElementById('panel-feature-name').value = item.feature;
+  document.getElementById('panel-id').textContent     = item.id;
 
   populateEpicSelect(document.getElementById('edit-epic'), item.epic);
 
-  document.getElementById('edit-web').value     = item.platforms.web;
   document.getElementById('edit-ios').value     = item.platforms.ios;
   document.getElementById('edit-android').value = item.platforms.android;
-  document.getElementById('edit-atv').value     = item.platforms.atv;
 
   document.getElementById('edit-priority').value = item.priority;
   document.getElementById('edit-sprint').value   = item.sprint || '';
@@ -379,6 +456,12 @@ function openEditPanel(id) {
     openFigma.style.display = this.value ? 'inline-flex' : 'none';
   }, { once: true });
 
+  document.getElementById('edit-fecha-compromiso').value = item.fechaCompromiso || '';
+  document.getElementById('edit-fecha-entrega').value    = item.fechaEntrega    || '';
+  const fechaRealEl = document.getElementById('edit-fecha-real');
+  fechaRealEl.value = item.fechaEntregaReal || '';
+  fechaRealEl.classList.toggle('date-real-set', !!(item.fechaEntregaReal));
+
   toggleBlockerReason(item.blocker);
   App.openPanel();
 }
@@ -403,13 +486,13 @@ document.getElementById('btn-save').addEventListener('click', async () => {
   const prevEpic  = prevItem ? prevItem.epic : '';
   const newEpic   = document.getElementById('edit-epic').value;
 
+  const newFeatureName = document.getElementById('panel-feature-name').value.trim();
   const payload = {
+    feature:       newFeatureName || prevItem.feature,
     epic:          newEpic,
     platforms: {
-      web:     document.getElementById('edit-web').value,
       ios:     document.getElementById('edit-ios').value,
       android: document.getElementById('edit-android').value,
-      atv:     document.getElementById('edit-atv').value,
     },
     priority:      document.getElementById('edit-priority').value,
     sprint:        document.getElementById('edit-sprint').value.trim(),
@@ -418,8 +501,11 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     blocker:       document.getElementById('edit-blocker').value,
     blockerReason: document.getElementById('edit-blocker-reason').value.trim(),
     notes:         document.getElementById('edit-notes').value.trim(),
-    linkPRD:       document.getElementById('edit-link-prd').value.trim(),
-    linkFigma:     document.getElementById('edit-link-figma').value.trim(),
+    linkPRD:           document.getElementById('edit-link-prd').value.trim(),
+    linkFigma:         document.getElementById('edit-link-figma').value.trim(),
+    fechaCompromiso:   document.getElementById('edit-fecha-compromiso').value,
+    fechaEntrega:      document.getElementById('edit-fecha-entrega').value,
+    fechaEntregaReal:  document.getElementById('edit-fecha-real').value,
   };
 
   try {
@@ -442,11 +528,11 @@ document.getElementById('btn-save').addEventListener('click', async () => {
 // ── Export CSV ─────────────────────────────────────────────────────────────
 
 document.getElementById('btn-export').addEventListener('click', () => {
-  const headers = ['ID', 'Épica', 'Funcionalidad', 'Web', 'iOS', 'Android', 'ATV',
+  const headers = ['ID', 'Épica', 'Funcionalidad', 'iOS', 'Android',
                    'Prioridad', 'Sprint', 'PRD Listo', 'Bloqueado por', 'Notas'];
   const rows = filteredItems.map(i => [
     i.id, i.epic, `"${i.feature}"`,
-    i.platforms.web, i.platforms.ios, i.platforms.android, i.platforms.atv,
+    i.platforms.ios, i.platforms.android,
     i.priority, i.sprint || '',
     i.prdReady ? 'Sí' : 'No',
     i.blocker || '',
@@ -499,6 +585,10 @@ function loadColumnVisibility() {
     PLATFORMS.forEach(p => {
       if (typeof saved[p] === 'boolean') visiblePlatforms[p] = saved[p];
     });
+    // Remove stale web/atv keys from storage
+    const cleaned = {};
+    PLATFORMS.forEach(p => { cleaned[p] = visiblePlatforms[p]; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned));
   } catch (_) {}
 }
 
@@ -667,6 +757,358 @@ document.getElementById('nuevo-modal-save').addEventListener('click', async () =
       errEl.textContent = 'Error al guardar';
     }
   }
+});
+
+// ── Epic / Feature order persistence ──────────────────────────────────────
+
+const EPIC_ORDER_KEY    = 'ditu-epic-order';
+const FEAT_ORDER_PREFIX = 'ditu-feature-order-';
+
+function loadEpicOrder(epics) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(EPIC_ORDER_KEY) || '[]');
+    if (!saved.length) return epics;
+    const known    = saved.filter(e => epics.includes(e));
+    const newEpics = epics.filter(e => !saved.includes(e));
+    return [...known, ...newEpics];
+  } catch { return epics; }
+}
+
+function saveEpicOrder() {
+  const order = [...document.querySelectorAll('#backlog-table .epic-group')]
+    .map(g => g.dataset.epic);
+  localStorage.setItem(EPIC_ORDER_KEY, JSON.stringify(order));
+}
+
+function loadFeatureOrder(epicName, items) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FEAT_ORDER_PREFIX + epicName) || '[]');
+    if (!saved.length) return items;
+    const ordered  = saved.map(id => items.find(i => i.id === id)).filter(Boolean);
+    const newItems = items.filter(i => !saved.includes(i.id));
+    return [...ordered, ...newItems];
+  } catch { return items; }
+}
+
+function saveFeatureOrder(epicName) {
+  const group = document.querySelector(`#backlog-table .epic-group[data-epic="${CSS.escape(epicName)}"]`);
+  if (!group) return;
+  const ids = [...group.querySelectorAll('tr.feature-row')].map(tr => tr.dataset.id);
+  localStorage.setItem(FEAT_ORDER_PREFIX + epicName, JSON.stringify(ids));
+}
+
+// ── Sortable ───────────────────────────────────────────────────────────────
+
+let _epicSortable     = null;
+let _featureSortables = [];
+
+function updateEpicHeadersOnly() {
+  document.querySelectorAll('#backlog-table .epic-group').forEach(group => {
+    const epicName   = group.dataset.epic;
+    const allForEpic = allItems.filter(i => i.epic === epicName);
+    const visible    = group.querySelectorAll('.feature-row').length;
+    const delivered  = allForEpic.filter(i =>
+      ['ios', 'android'].every(p => i.platforms[p] === 'entregado')
+    ).length;
+    const pct        = allForEpic.length ? Math.round(delivered / allForEpic.length * 100) : 0;
+    const isFiltered = visible < allForEpic.length;
+    const label      = isFiltered
+      ? `${visible} de ${allForEpic.length} visibles`
+      : `${delivered}/${allForEpic.length} entregadas`;
+    const fill  = group.querySelector('.epic-progress-bar-fill');
+    const count = group.querySelector('.epic-count');
+    if (fill)  fill.style.width  = `${pct}%`;
+    if (count) count.textContent = label;
+  });
+}
+
+function initSortable() {
+  if (!window.Sortable) return;
+
+  // Destroy old instances
+  if (_epicSortable) { _epicSortable.destroy(); _epicSortable = null; }
+  _featureSortables.forEach(s => s.destroy());
+  _featureSortables = [];
+
+  const container = document.getElementById('backlog-table');
+
+  // Level 1 — reorder epic groups (div.epic-group — no table layout issues)
+  _epicSortable = Sortable.create(container, {
+    handle:      '.drag-handle-epic',
+    draggable:   '.epic-group',
+    animation:   150,
+    ghostClass:  'drag-ghost-epic',
+    onEnd() { saveEpicOrder(); },
+  });
+
+  // Level 2 & 3 — reorder features within/across epic feature tables
+  container.querySelectorAll('.features-table tbody').forEach(tbody => {
+    const s = Sortable.create(tbody, {
+      handle:     '.drag-handle-row',
+      draggable:  '.feature-row',
+      filter:     '.epic-row,.empty-epic-cell',
+      group:                { name: 'features', pull: true, put: true },
+      animation:            150,
+      ghostClass:           'drag-ghost-row',
+      emptyInsertThreshold: 40,
+      async onEnd(evt) {
+        const fromEpic = evt.from.dataset.epic;
+        const toEpic   = evt.to.dataset.epic;
+        const id       = evt.item.dataset.id;
+
+        // Same epic — just save new order
+        if (fromEpic === toEpic) {
+          saveFeatureOrder(toEpic);
+          return;
+        }
+
+        // Dropped outside any epic group — revert
+        if (!toEpic) {
+          applyFilters();
+          return;
+        }
+
+        // Cross-epic: save DOM order BEFORE re-render while SortableJS DOM is correct
+        saveFeatureOrder(fromEpic);
+        saveFeatureOrder(toEpic);
+
+        try {
+          await App.apiPut(`/api/backlog/${id}`, { epic: toEpic });
+          const item = allItems.find(i => i.id === id);
+          if (item) item.epic = toEpic;
+          App.showToast(`✓ Movida a ${toEpic}`);
+        } catch {
+          App.showToast('Error al mover funcionalidad', 'error');
+        }
+
+        // Full re-render: fixes empty-state rows, progress bars and cross-epic misplacement
+        applyFilters();
+      },
+    });
+    _featureSortables.push(s);
+  });
+}
+
+// ── Inline edit — epic name ────────────────────────────────────────────────
+
+function startInlineEpicEdit(pencilBtn) {
+  const header  = pencilBtn.closest('.epic-header');
+  const group   = pencilBtn.closest('.epic-group');
+  const nameSpan = header.querySelector('.epic-name');
+  const oldName  = nameSpan.textContent;
+
+  const input = document.createElement('input');
+  input.className = 'inline-edit-input';
+  input.value = oldName;
+  nameSpan.replaceWith(input);
+  pencilBtn.style.opacity = '0';
+  pencilBtn.style.pointerEvents = 'none';
+  input.focus(); input.select();
+
+  let errorSpan = null;
+  let committed = false;
+
+  function showError(msg) {
+    input.classList.add('error');
+    if (!errorSpan) {
+      errorSpan = document.createElement('span');
+      errorSpan.className = 'inline-edit-error';
+      input.after(errorSpan);
+    }
+    errorSpan.textContent = msg;
+  }
+
+  function restore(name) {
+    const span = document.createElement('span');
+    span.className = 'epic-name';
+    span.textContent = name;
+    if (input.parentNode) input.replaceWith(span);
+    if (errorSpan) errorSpan.remove();
+    pencilBtn.style.opacity = '';
+    pencilBtn.style.pointerEvents = '';
+  }
+
+  async function save() {
+    if (committed) return;
+    committed = true;
+    const newName = input.value.trim();
+
+    if (!newName) {
+      committed = false;
+      showError('El nombre no puede estar vacío');
+      return;
+    }
+    if (newName === oldName) { restore(oldName); return; }
+
+    // Check duplicate
+    const existingEpics = [...document.querySelectorAll('#backlog-table .epic-group')]
+      .map(g => g.dataset.epic).filter(n => n !== oldName);
+    if (existingEpics.includes(newName)) {
+      committed = false;
+      showError('Ya existe una épica con este nombre');
+      return;
+    }
+
+    try {
+      await App.apiPut('/api/backlog/epic/rename', { oldName, newName });
+
+      // Update local state
+      allItems.forEach(i => { if (i.epic === oldName) i.epic = newName; });
+      filteredItems.forEach(i => { if (i.epic === oldName) i.epic = newName; });
+      allEpics = allEpics.map(e => e === oldName ? newName : e);
+
+      // Update DOM
+      if (group) {
+        group.dataset.epic = newName;
+        const tbody = group.querySelector('.features-table tbody');
+        if (tbody) tbody.dataset.epic = newName;
+        const delBtn = group.querySelector('.btn-delete-epic');
+        if (delBtn) delBtn.dataset.epic = newName;
+      }
+
+      restore(newName);
+      saveEpicOrder();
+      populateEpicFilter();
+      App.showToast('✓ Épica renombrada');
+    } catch {
+      committed = false;
+      showError('Error al guardar');
+    }
+  }
+
+  function cancel() {
+    if (committed) return;
+    committed = true;
+    restore(oldName);
+  }
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter')  { e.preventDefault(); save(); }
+    if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+  });
+  input.addEventListener('blur', () => { if (!committed) save(); });
+}
+
+// ── Inline edit — feature name ─────────────────────────────────────────────
+
+function startInlineFeatureEdit(pencilBtn) {
+  const cell     = pencilBtn.closest('.cell-feature-name');
+  const nameSpan = cell.querySelector('.feature-name-text');
+  const id       = cell.dataset.id;
+  const oldName  = nameSpan.textContent;
+
+  const input = document.createElement('input');
+  input.className = 'inline-edit-input feat';
+  input.value = oldName;
+  nameSpan.replaceWith(input);
+  pencilBtn.style.display = 'none';
+  input.focus(); input.select();
+
+  let committed = false;
+
+  function restore(name) {
+    const span = document.createElement('span');
+    span.className = 'feature-name-text';
+    span.textContent = name;
+    if (input.parentNode) input.replaceWith(span);
+    pencilBtn.style.display = '';
+  }
+
+  async function save() {
+    if (committed) return;
+    committed = true;
+    const newName = input.value.trim();
+    if (!newName) { committed = false; input.classList.add('error'); return; }
+    if (newName === oldName) { restore(oldName); return; }
+
+    try {
+      await App.apiPut(`/api/backlog/${id}`, { feature: newName });
+      const item = allItems.find(i => i.id === id);
+      if (item) item.feature = newName;
+      restore(newName);
+      // Sync panel if this item is open
+      if (editingId === id) {
+        document.getElementById('panel-feature-name').value = newName;
+      }
+      App.showToast('✓ Nombre actualizado');
+    } catch {
+      committed = false;
+      input.classList.add('error');
+    }
+  }
+
+  function cancel() {
+    if (committed) return;
+    committed = true;
+    restore(oldName);
+  }
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter')  { e.preventDefault(); save(); }
+    if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+  });
+  input.addEventListener('blur', () => { if (!committed) save(); });
+}
+
+// ── Confirm delete modal ──────────────────────────────────────────────────
+
+let _confirmDeleteCallback = null;
+
+function showConfirmDelete(message, confirmLabel, onConfirm) {
+  _confirmDeleteCallback = onConfirm;
+  const overlay = document.getElementById('confirm-delete-overlay');
+  const msgEl   = document.getElementById('confirm-delete-msg');
+  const okBtn   = document.getElementById('confirm-delete-ok');
+  // Split on \n for multi-line messages
+  msgEl.innerHTML = message.replace(/\n/g, '<br>');
+  okBtn.textContent = confirmLabel || 'Sí, eliminar';
+  overlay.style.display = 'flex';
+}
+
+function closeConfirmDelete() {
+  document.getElementById('confirm-delete-overlay').style.display = 'none';
+  _confirmDeleteCallback = null;
+}
+
+document.getElementById('confirm-delete-cancel').addEventListener('click', closeConfirmDelete);
+document.getElementById('confirm-delete-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeConfirmDelete();
+});
+document.getElementById('confirm-delete-ok').addEventListener('click', async () => {
+  if (!_confirmDeleteCallback) return;
+  const cb = _confirmDeleteCallback;
+  closeConfirmDelete();
+  try {
+    await cb();
+  } catch (err) {
+    App.showToast('Error al eliminar', 'error');
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('confirm-delete-overlay').style.display === 'flex') {
+    closeConfirmDelete();
+  }
+});
+
+// ── Delete feature ─────────────────────────────────────────────────────────
+
+document.getElementById('btn-delete-feature').addEventListener('click', () => {
+  if (!editingId) return;
+  const item = allItems.find(i => i.id === editingId);
+  if (!item) return;
+  showConfirmDelete(
+    `¿Eliminar "${item.feature}"?`,
+    'Sí, eliminar',
+    async () => {
+      await App.apiDelete(`/api/backlog/${editingId}`);
+      allItems = allItems.filter(i => i.id !== editingId);
+      filteredItems = filteredItems.filter(i => i.id !== editingId);
+      App.closePanel();
+      renderTable();
+      updateStats();
+      App.showToast('✓ Funcionalidad eliminada');
+    }
+  );
 });
 
 init();

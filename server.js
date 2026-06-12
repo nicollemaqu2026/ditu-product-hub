@@ -89,10 +89,8 @@ function buildSeedItem(base) {
     epic: base.epic,
     feature: base.feature,
     platforms: {
-      web: 'sin-especificar',
       ios: 'sin-especificar',
       android: 'sin-especificar',
-      atv: 'sin-especificar',
     },
     priority: 'media',
     sprint: '',
@@ -103,6 +101,9 @@ function buildSeedItem(base) {
     notes: '',
     linkPRD: '',
     linkFigma: '',
+    fechaCompromiso: '',
+    fechaEntrega: '',
+    fechaEntregaReal: '',
     createdAt: now,
     updatedAt: now,
   };
@@ -179,7 +180,7 @@ function buildEmptyPRD(id, backlogItem, author) {
     userStories: [{ id: 'US-1', as: '', want: '', soThat: '' }],
     requirements: [{ id: 'REQ-1', description: '', priority: 'must-have' }],
     outOfScope: '',
-    acceptanceCriteria: { web: '', ios: '', android: '', atv: '' },
+    acceptanceCriteria: { ios: '', android: '' },
     technicalNotes: '',
     designNotes: '',
     openQuestions: [{ id: 'Q-1', question: '', answer: '', resolved: false }],
@@ -322,6 +323,27 @@ app.post('/api/backlog', (req, res) => {
   res.status(201).json(newItem);
 });
 
+// Must be before /:id to avoid route collision
+app.delete('/api/backlog/epic/:epicName', (req, res) => {
+  const epicName = decodeURIComponent(req.params.epicName);
+  const items = readBacklog();
+  const remaining = items.filter(i => i.epic !== epicName);
+  writeBacklog(remaining);
+  const epics = readEpics();
+  const filtered = epics.filter(e => e !== epicName);
+  if (filtered.length !== epics.length) writeEpics(filtered);
+  res.json({ success: true, deleted: items.length - remaining.length });
+});
+
+app.delete('/api/backlog/:id', (req, res) => {
+  const items = readBacklog();
+  const idx = items.findIndex(i => i.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'No encontrado' });
+  items.splice(idx, 1);
+  writeBacklog(items);
+  res.json({ success: true });
+});
+
 app.get('/api/backlog/:id', (req, res) => {
   const items = readBacklog();
   const item = items.find(i => i.id === req.params.id);
@@ -329,11 +351,43 @@ app.get('/api/backlog/:id', (req, res) => {
   res.json(item);
 });
 
+// Must be before /:id to avoid route collision
+app.put('/api/backlog/epic/rename', (req, res) => {
+  const { oldName, newName } = req.body;
+  if (!newName || !newName.trim()) return res.status(400).json({ error: 'newName es requerido' });
+  const trimmed = newName.trim();
+  const items = readBacklog();
+  let updated = 0;
+  items.forEach(item => {
+    if (item.epic === oldName) {
+      item.epic = trimmed;
+      item.updatedAt = new Date().toISOString();
+      updated++;
+    }
+  });
+  writeBacklog(items);
+  const epics = readEpics();
+  const epicIdx = epics.indexOf(oldName);
+  if (epicIdx !== -1) { epics[epicIdx] = trimmed; writeEpics(epics); }
+  res.json({ success: true, updated });
+});
+
 app.put('/api/backlog/:id', (req, res) => {
   const items = readBacklog();
   const idx = items.findIndex(i => i.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: 'No encontrado' });
-  items[idx] = { ...items[idx], ...req.body, id: items[idx].id, updatedAt: new Date().toISOString() };
+  const body = { ...req.body };
+  if (body.platforms) {
+    const { ios, android } = body.platforms;
+    body.platforms = { ios, android };
+  }
+  const merged = { ...items[idx], ...body, id: items[idx].id, updatedAt: new Date().toISOString() };
+  // Auto-set fechaEntregaReal when all platforms reach "entregado"
+  const allDelivered = Object.values(merged.platforms || {}).every(s => s === 'entregado');
+  if (allDelivered && !merged.fechaEntregaReal) {
+    merged.fechaEntregaReal = new Date().toISOString().split('T')[0];
+  }
+  items[idx] = merged;
   writeBacklog(items);
   res.json(items[idx]);
 });
@@ -467,6 +521,82 @@ app.post('/api/patita', async (req, res) => {
   }
 
   res.end();
+});
+
+// ── Roadmap / Compliance API ───────────────────────────────────────────────
+
+app.get('/api/roadmap', (req, res) => {
+  const items = readBacklog();
+  const today = new Date().toISOString().split('T')[0];
+
+  function daysDiff(a, b) {
+    return Math.round((new Date(a) - new Date(b)) / 86400000);
+  }
+  function isDelivered(item) {
+    return Object.values(item.platforms || {}).length > 0 &&
+           Object.values(item.platforms || {}).every(s => s === 'entregado');
+  }
+  function compliance(item) {
+    const delivered = isDelivered(item);
+    const fc = item.fechaCompromiso || '';
+    const fer = item.fechaEntregaReal || '';
+    if (!fc) return { status: 'sin-fecha', deltaDias: null };
+    if (delivered && fer) {
+      const d = daysDiff(fer, fc);
+      if (d < 0)  return { status: 'adelantado', deltaDias: d };
+      if (d === 0) return { status: 'cumplido',   deltaDias: 0 };
+      return { status: 'retrasado-entregado', deltaDias: d };
+    }
+    const d = daysDiff(today, fc);
+    if (d > 0) return { status: 'retrasado-activo', deltaDias: d };
+    return { status: 'en-tiempo', deltaDias: d };
+  }
+
+  const annotated = items.map(i => ({ ...i, _compliance: compliance(i), _delivered: isDelivered(i) }));
+  const withCommitment  = annotated.filter(i => i.fechaCompromiso);
+  const deliveredDated  = annotated.filter(i => i._delivered && i.fechaCompromiso && i.fechaEntregaReal);
+  const cumplidas       = deliveredDated.filter(i => ['cumplido','adelantado'].includes(i._compliance.status)).length;
+  const adelantados     = deliveredDated.filter(i => i._compliance.status === 'adelantado').length;
+  const retrasadasActivas = annotated.filter(i => i._compliance.status === 'retrasado-activo');
+  const retrasadasEnt   = annotated.filter(i => i._compliance.status === 'retrasado-entregado');
+  const allDelayDays    = [...retrasadasActivas, ...retrasadasEnt].map(i => i._compliance.deltaDias).filter(d => d > 0);
+  const retrasoPromedio = allDelayDays.length ? +(allDelayDays.reduce((a,b)=>a+b,0)/allDelayDays.length).toFixed(1) : 0;
+  const pctCumplimiento = withCommitment.length ? Math.round((cumplidas / withCommitment.length) * 100) : 0;
+
+  // Per epic
+  const epicNames = [...new Set(items.map(i => i.epic))];
+  const porEpica = epicNames.map(epic => {
+    const eItems = annotated.filter(i => i.epic === epic);
+    const fcs = eItems.filter(i => i.fechaCompromiso).map(i => i.fechaCompromiso).sort();
+    const fes = eItems.filter(i => i.fechaEntrega).map(i => i.fechaEntrega).sort();
+    const fcEpic = fcs.length ? fcs[fcs.length - 1] : null;
+    const feEpic = fes.length ? fes[fes.length - 1] : null;
+    let estado = 'sin-fecha';
+    if (fcEpic) {
+      if (eItems.some(i => i._compliance.status === 'retrasado-activo')) estado = 'retrasado-activo';
+      else if (eItems.every(i => i._delivered)) estado = 'cumplido';
+      else if (eItems.some(i => i._compliance.status === 'retrasado-entregado')) estado = 'retrasado-entregado';
+      else estado = 'en-tiempo';
+    }
+    const delta = fcEpic && feEpic ? daysDiff(feEpic, fcEpic) : null;
+    return { epic, estado, fechaCompromisoEpica: fcEpic, fechaEstimadaEpica: feEpic, deltaDias: delta, features: eItems };
+  });
+
+  // Risk groups
+  const vencidas = annotated.filter(i => i._compliance.status === 'retrasado-activo').length;
+  const enRiesgo = annotated.filter(i => {
+    if (!i.fechaCompromiso || i._delivered) return false;
+    const d = daysDiff(i.fechaCompromiso, today);
+    return d >= 0 && d <= 7 && (!i.prdReady || !!i.blocker);
+  }).length;
+  const sinFecha = annotated.filter(i => !i.fechaCompromiso).length;
+
+  res.json({
+    metrics: { porcentajeCumplimiento: pctCumplimiento, epicasEnRetraso: retrasadasActivas.length > 0 ? porEpica.filter(e=>e.estado==='retrasado-activo').length : 0, retrasoPromedioDias: retrasoPromedio, entregadasAntesDefecha: adelantados, totalConCompromiso: withCommitment.length, cumplidas },
+    riskGroups: { vencidas, enRiesgo, sinFecha },
+    porEpica,
+    items: annotated,
+  });
 });
 
 // ── Serve frontend ──────────────────────────────────────────────────────────

@@ -47,7 +47,7 @@ function calcPRDProgress(prd) {
   if (prd.requirements && prd.requirements.some(r => r.description)) filled++;
   if (prd.outOfScope && prd.outOfScope.trim()) filled++;
   const ac = prd.acceptanceCriteria || {};
-  if (ac.web || ac.ios || ac.android || ac.atv) filled++;
+  if (ac.ios || ac.android) filled++;
   if (prd.technicalNotes && prd.technicalNotes.trim()) filled++;
   if (prd.designNotes && prd.designNotes.trim()) filled++;
   if (prd.openQuestions && prd.openQuestions.some(q => q.question)) filled++;
@@ -270,10 +270,8 @@ function collectEditorPayload() {
     requirements,
     outOfScope:   document.getElementById('prd-out-of-scope').value.trim(),
     acceptanceCriteria: {
-      web:     document.getElementById('prd-ac-web').value.trim(),
       ios:     document.getElementById('prd-ac-ios').value.trim(),
       android: document.getElementById('prd-ac-android').value.trim(),
-      atv:     document.getElementById('prd-ac-atv').value.trim(),
     },
     technicalNotes: document.getElementById('prd-tech-notes').value.trim(),
     designNotes:    document.getElementById('prd-design-notes').value.trim(),
@@ -296,10 +294,8 @@ function openEditor(prdId) {
   document.getElementById('prd-design-notes').value   = prdCurrent.designNotes  || '';
 
   const ac = prdCurrent.acceptanceCriteria || {};
-  document.getElementById('prd-ac-web').value     = ac.web     || '';
   document.getElementById('prd-ac-ios').value     = ac.ios     || '';
   document.getElementById('prd-ac-android').value = ac.android || '';
-  document.getElementById('prd-ac-atv').value     = ac.atv     || '';
 
   renderDynamicLists(prdCurrent);
   updateStatusButton(prdCurrent.status);
